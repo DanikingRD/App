@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "254749145974",
+    "project_id": "digitalcardapp-b3225",
+    "storage_bucket": "digitalcardapp-b3225.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254749145974:android:07507850c55d24d2db5857",
+        "android_client_info": {
+          "package_name": "com.daniel.digital_card_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254749145974-uato7qtesjrcn8rmbgrad15hajrra8hr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyo77_0v86voJde3QQT1lYubEGCHHyhG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254749145974-uato7qtesjrcn8rmbgrad15hajrra8hr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
