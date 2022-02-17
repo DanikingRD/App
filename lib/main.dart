@@ -13,6 +13,10 @@ class HomePageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Digital Card App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue 
+      ),
       home: AuthScreen(),
     );
   }
