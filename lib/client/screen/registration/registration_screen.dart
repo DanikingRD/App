@@ -11,9 +11,8 @@ class RegistrationScreen extends StatefulWidget {
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
 
-  static VoidCallback navigateTo(BuildContext context, Widget nextPage) {
-    return () =>
-        Navigator.push(context, RegistrationPageTransition(child: nextPage));
+  static VoidCallback navigateTo(BuildContext context, Widget nextPage, GlobalKey<FormState> key) {
+    return () => Navigator.push(context, RegistrationPageTransition(child: nextPage));
   }
 
   static VoidCallback navigateBack(BuildContext context) {
@@ -26,15 +25,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final _key = GlobalKey<FormState>();
+  final GlobalKey<FormState> _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    return const RegistrationPageTemplate(
+    return RegistrationPageTemplate(
         header: 'What\'s your name?',
-        firstInputLabel: 'Enter your name',
-        secondInputLabel: 'Enter your password',
-        nextWidget: ContactPage(),
+        firstInputLabel: 'Enter your first name',
+        secondInputLabel: 'Enter your last name',
+        nextWidget: ContactPage(_key),
+        uniqueKey: GlobalKey(),
       );
   }
 }

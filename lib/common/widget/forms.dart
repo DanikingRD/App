@@ -64,3 +64,41 @@ class TextInputForm extends TextFormField {
     );
   }
 }
+
+class UnderlinedTextInput extends TextFormField {
+  UnderlinedTextInput({
+    Key? key,
+    required String label,
+    Icon? icon,
+    Color cursorColor = homeColor,
+    TextInputAction? inputAction,
+    bool obscureText = false,
+    TextInputType? keyboardType,
+    TextEditingController? controller,
+    bool autoFocusable = false,
+    FormFieldSetter<String>? onSaved,
+    Color borderColor = homeColor,
+    TextStyle? labelStyle,
+    Icon? prefixIcon,
+
+  }) : super(
+        decoration: InputDecoration(
+          labelText: label,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Color.fromARGB(255, 112, 112, 112), width: 2.0)
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: borderColor, width: 2.0)
+          ),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          floatingLabelStyle: labelStyle,
+          prefixIcon: prefixIcon,
+        ),
+        autofocus: autoFocusable,
+        controller: controller,
+        textInputAction: inputAction,
+        obscureText: obscureText,
+        keyboardType: keyboardType,
+        cursorColor: homeColor,
+      );
+}
