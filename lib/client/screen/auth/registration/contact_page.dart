@@ -2,19 +2,19 @@ import 'package:digital_card_app/client/screen/home_screen.dart';
 import 'package:digital_card_app/common/constants.dart';
 import 'package:digital_card_app/common/util/util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ContactPage extends StatelessWidget {
 
-  final EdgeInsetsGeometry _margin;
+  static const String identifier = '/setup/contact';
 
-  ContactPage(this._margin);
+  const ContactPage();
 
   @override
   Widget build(BuildContext context) {
+    final EdgeInsets padding = ModalRoute.of(context)!.settings.arguments as EdgeInsets;
     return Scaffold(
         body: Padding(
-          padding: _margin,
+          padding: padding,
           child: SizedBox(
             width: double.infinity,
             height: double.infinity,

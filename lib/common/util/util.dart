@@ -15,6 +15,7 @@ class AppUtil {
       child: Icon(icon),
       onPressed: clickHandler,
       backgroundColor: Theme.of(ctx).primaryColor,
+      heroTag: null,
     );
   }
 

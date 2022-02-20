@@ -1,19 +1,19 @@
 import 'package:digital_card_app/client/screen/auth/registration/contact_page.dart';
-import 'package:digital_card_app/common/constants.dart';
 import 'package:digital_card_app/common/util/util.dart';
 import 'package:digital_card_app/server/auth_service.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatefulWidget {
-  final AuthService _service;
+class SetupAccountScreen extends StatefulWidget {
 
-  RegisterScreen(this._service);
+  static const String identifier = '/setup-account';
+
+  const SetupAccountScreen();
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<SetupAccountScreen> createState() => _SetupAccountScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _SetupAccountScreenState extends State<SetupAccountScreen> {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -22,6 +22,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final service = ModalRoute.of(context)!.settings.arguments as AuthService;
     const edge = EdgeInsets.symmetric(horizontal: 32, vertical: 64);
     return Scaffold(
       body: Form(
@@ -35,6 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   navigateBack(context),
+                  const SizedBox(height: 12),
                   const Text('What\'s your name?',
                       style: TextStyle(fontSize: 24)),
                   const SizedBox(height: 32),
@@ -49,7 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 32),
                   Align(
                     alignment: Alignment.topRight,
-                    child: navigateTo(context, ContactPage(edge)),
+                    child: navigateTo(context, const ContactPage(), edge),
                   )
                 ],
               ),
@@ -60,11 +62,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  static Widget navigateTo(BuildContext context, Widget nextPage) {
+  static Widget navigateTo(BuildContext context, Widget nextPage, EdgeInsets padding) {
     return AppUtil.navigationButton(context, Icons.navigate_next, () {
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return nextPage;
-      }));
+      Navigator.pushNamed(context, ContactPage.identifier, arguments: padding);
     });
   }
 

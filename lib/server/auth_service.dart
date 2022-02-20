@@ -25,6 +25,7 @@ class AuthService {
         return null;
     }
   }
+
     Future<CustomUser?> logInAnonymously() async {
     try {
         final credentials = await _auth.signInAnonymously();
@@ -34,6 +35,7 @@ class AuthService {
         return null;
     }
   }
+  
   CustomUser? _fromFirebase(UserCredential credentials) {
     return CustomUser(uid: credentials.user!.uid);
   }

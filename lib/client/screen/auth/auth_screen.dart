@@ -1,4 +1,4 @@
-import 'package:digital_card_app/client/screen/auth/registration/registration_screen.dart';
+import 'package:digital_card_app/client/screen/auth/registration/setup_account.dart';
 import 'package:digital_card_app/common/constants.dart';
 import 'package:digital_card_app/common/util/util.dart';
 import 'package:digital_card_app/server/auth_service.dart';
@@ -6,15 +6,18 @@ import 'package:flutter/material.dart';
 
 //TO-DO: IMPLEMENT CUPERTINO STYLE FOR IOS
 class AuthScreen extends StatelessWidget {
-  final AuthService _service;
-  final Gradient _linearGradient;
+
+  static const String identifier = '/auth';
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  AuthScreen(this._service, this._linearGradient, {Key? key}) : super(key: key);
+  AuthScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final screenData = ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
+    final AuthService authService = screenData['auth_service'] as AuthService;
+    final Gradient linearGradient = screenData['gradient'] as Gradient;
     final themeData = Theme.of(context);
     final emailInput = AppUtil.textInput(
         color: Colors.white,
@@ -27,8 +30,7 @@ class AuthScreen extends StatelessWidget {
     final loginButton = ElevatedButton(
       child: const Text('LOGIN', style: TextStyle(fontFamily: 'NotoSans', fontSize: 18, color: primaryColor)),
       style: TextButton.styleFrom(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           padding: const EdgeInsets.all(24),
           backgroundColor: themeData.backgroundColor),
       onPressed: (() async {
@@ -40,7 +42,7 @@ class AuthScreen extends StatelessWidget {
         body: SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
-          gradient: _linearGradient,
+          gradient: linearGradient,
         ),
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -49,11 +51,7 @@ class AuthScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset('assets/image/logo.png'),
-            const Text('Login details',
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white)),
+            const Text('Login details',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white)),
             const SizedBox(height: 25),
             emailInput,
             const SizedBox(height: 25),
@@ -76,7 +74,7 @@ class AuthScreen extends StatelessWidget {
                 const Text('Not a member yet? ',
                     style: TextStyle(color: Colors.white)),
                 GestureDetector(
-                  onTap: () => openRegisterScreen(context),
+                  onTap: () => openSetupScreen(context, authService),
                   child: const Text(
                     'SignUp',
                     style: TextStyle(
@@ -93,9 +91,7 @@ class AuthScreen extends StatelessWidget {
     ));
   }
 
-  void openRegisterScreen(BuildContext ctx) {
-    Navigator.push(ctx, MaterialPageRoute(builder: (_) {
-      return RegisterScreen(_service);
-    }));
+  void openSetupScreen(BuildContext ctx, AuthService service) {
+      Navigator.pushNamed(ctx, SetupAccountScreen.identifier, arguments: service);
   }
 }

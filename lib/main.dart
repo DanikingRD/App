@@ -1,3 +1,6 @@
+import 'package:digital_card_app/client/screen/auth/auth_screen.dart';
+import 'package:digital_card_app/client/screen/auth/registration/contact_page.dart';
+import 'package:digital_card_app/client/screen/auth/registration/setup_account.dart';
 import 'package:digital_card_app/client/screen/welcome/welcome_screen.dart';
 import 'package:digital_card_app/common/constants.dart';
 import 'package:digital_card_app/server/auth_service.dart';
@@ -30,6 +33,11 @@ class Main extends StatelessWidget {
         ),
       ),
       home: WelcomeScreen(_service),
+      routes: {
+        AuthScreen.identifier: (ctx) => AuthScreen(),
+        SetupAccountScreen.identifier: (ctx) => const SetupAccountScreen(),
+        ContactPage.identifier: (ctx) => const ContactPage(),
+      } ,
     );  
   }
 }

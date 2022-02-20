@@ -1,10 +1,13 @@
 import 'package:digital_card_app/client/screen/auth/auth_screen.dart';
+import 'package:digital_card_app/client/screen/auth/registration/setup_account.dart';
 import 'package:digital_card_app/server/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
   
   final AuthService _service; 
+  
+  static const String identifier = '/welcome';
 
   const WelcomeScreen(this._service, {key}) : super(key: key);
 
@@ -49,9 +52,10 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 30),
               InkWell(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return AuthScreen(_service, linearGradient);
-                  }));
+                  Navigator.pushNamed(context, AuthScreen.identifier, arguments: {
+                    'auth_service': _service,
+                    'gradient': linearGradient 
+                  });
                 },
                 child: const Text('LOG IN WITH EXISTING ACCOUNT', style: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold)),
               ),
