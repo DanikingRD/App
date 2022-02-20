@@ -1,20 +1,23 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-class AppUtil {
+enum NavigationDir {
+    next,
+    previous,
+}
+
+class Util {
   // Utility class not meant to be instantiated
-  AppUtil._();
+  Util._();
 
   static Widget navigationButton(BuildContext ctx,IconData icon, Function() clickHandler, {
-    double? elevation, Color? splashColor,
+    double? elevation, Color? splashColor, Color? backgroundColor,
   }) {
     return FloatingActionButton(
       elevation: elevation,
       splashColor: splashColor,
       child: Icon(icon),
       onPressed: clickHandler,
-      backgroundColor: Theme.of(ctx).primaryColor,
+      backgroundColor: backgroundColor?? Theme.of(ctx).primaryColor,
       heroTag: null,
     );
   }

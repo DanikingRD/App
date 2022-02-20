@@ -20,7 +20,7 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const themeColor = primaryColor;
+    const themeColor = homeColor;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Digital Card App',

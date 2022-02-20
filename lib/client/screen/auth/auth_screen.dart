@@ -19,16 +19,16 @@ class AuthScreen extends StatelessWidget {
     final AuthService authService = screenData['auth_service'] as AuthService;
     final Gradient linearGradient = screenData['gradient'] as Gradient;
     final themeData = Theme.of(context);
-    final emailInput = AppUtil.textInput(
+    final emailInput = Util.textInput(
         color: Colors.white,
         icon: const Icon(Icons.email),
         text: 'Enter your email');
-    final passwordInput = AppUtil.textInput(
+    final passwordInput = Util.textInput(
         color: Colors.white,
         icon: const Icon(Icons.vpn_key),
         text: 'Enter your password');
     final loginButton = ElevatedButton(
-      child: const Text('LOGIN', style: TextStyle(fontFamily: 'NotoSans', fontSize: 18, color: primaryColor)),
+      child: const Text('LOGIN', style: TextStyle(fontFamily: 'NotoSans', fontSize: 18, color: homeColor)),
       style: TextButton.styleFrom(
           shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           padding: const EdgeInsets.all(24),
