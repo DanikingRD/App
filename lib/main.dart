@@ -34,7 +34,6 @@ class Main extends StatelessWidget {
       home: WelcomeScreen(_service),
       routes: {
         AuthScreen.identifier: (ctx) => AuthScreen(),
-        RegistrationScreen.identifier: (ctx) => const RegistrationScreen(),
       } ,
     );  
   }

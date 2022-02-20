@@ -1,4 +1,6 @@
+import 'package:digital_card_app/client/screen/registration/contact_page.dart';
 import 'package:digital_card_app/client/screen/registration/registration_screen.dart';
+import 'package:digital_card_app/client/transition/registration_page_trasition.dart';
 import 'package:digital_card_app/common/constants.dart';
 import 'package:digital_card_app/common/widget/text_input.dart';
 import 'package:digital_card_app/server/auth_service.dart';
@@ -123,6 +125,6 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void openSetupScreen(BuildContext ctx, AuthService service) {
-    Navigator.pushNamed(ctx, RegistrationScreen.identifier, arguments: service);
+    Navigator.push(context, RegistrationPageTransition(child: const RegistrationScreen()));
   }
 }

@@ -4,7 +4,7 @@ import 'package:digital_card_app/client/transition/registration_page_trasition.d
 import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  static const String identifier = '/account_registration';
+  static const String identifier = '/registration';
 
   const RegistrationScreen();
 
