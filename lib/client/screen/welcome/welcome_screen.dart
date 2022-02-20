@@ -31,10 +31,7 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 80),
               Image.asset('assets/image/logo.png'),
               const SizedBox(height: 15),
-              const Text(
-                'Tapea',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
+              const Text('Tapea', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
               const SizedBox(height: 30),
               InkWell(
                 onTap: () {},

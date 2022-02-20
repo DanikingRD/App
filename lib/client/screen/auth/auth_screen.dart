@@ -1,4 +1,4 @@
-import 'package:digital_card_app/client/screen/register_screen.dart';
+import 'package:digital_card_app/client/screen/auth/registration/registration_screen.dart';
 import 'package:digital_card_app/common/constants.dart';
 import 'package:digital_card_app/common/util/util.dart';
 import 'package:digital_card_app/server/auth_service.dart';
@@ -25,9 +25,7 @@ class AuthScreen extends StatelessWidget {
         icon: const Icon(Icons.vpn_key),
         text: 'Enter your password');
     final loginButton = ElevatedButton(
-      child: const Text('LOGIN',
-          style: TextStyle(
-              fontFamily: 'NotoSans', fontSize: 18, color: primaryColor)),
+      child: const Text('LOGIN', style: TextStyle(fontFamily: 'NotoSans', fontSize: 18, color: primaryColor)),
       style: TextButton.styleFrom(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -50,9 +48,7 @@ class AuthScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              child: Image.asset('assets/image/logo.png'),
-            ),
+            Image.asset('assets/image/logo.png'),
             const Text('Login details',
                 style: TextStyle(
                     fontSize: 24,
@@ -63,7 +59,7 @@ class AuthScreen extends StatelessWidget {
             const SizedBox(height: 25),
             passwordInput,
             const SizedBox(height: 30),
-            SizedBox(width: double.infinity, child: loginButton),
+            SizedBox(width: double.infinity, child: loginButton,),
             const SizedBox(height: 15),
             Container(
               alignment: Alignment.centerRight,
