@@ -26,6 +26,7 @@ class AuthScreen extends StatelessWidget {
     final passwordInput = Util.textInput(
         color: Colors.white,
         icon: const Icon(Icons.vpn_key),
+        hiddenText: true,
         text: 'Enter your password');
     final loginButton = ElevatedButton(
       child: const Text('LOGIN', style: TextStyle(fontFamily: 'NotoSans', fontSize: 18, color: homeColor)),
@@ -39,7 +40,7 @@ class AuthScreen extends StatelessWidget {
     );
 
     return Scaffold(
-        body: SingleChildScrollView(
+      body: SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
           gradient: linearGradient,
@@ -62,7 +63,7 @@ class AuthScreen extends StatelessWidget {
             Container(
               alignment: Alignment.centerRight,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {},   
                 child: const Text('Forgot password?',
                     style: TextStyle(color: Colors.white)),
               ),

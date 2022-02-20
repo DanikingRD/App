@@ -57,6 +57,7 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                     style: TextStyle(fontSize: 24)),
                 const SizedBox(height: 32),
                 Util.textInputWithBorder(
+                    autoFocus: true,
                     ctx: context,
                     label: 'First Name',
                     action: TextInputAction.next),

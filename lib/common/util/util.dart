@@ -1,26 +1,14 @@
+import 'package:digital_card_app/common/constants.dart';
 import 'package:flutter/material.dart';
 
 enum NavigationDir {
-    next,
-    previous,
+  next,
+  previous,
 }
 
 class Util {
   // Utility class not meant to be instantiated
   Util._();
-
-  static Widget navigationButton(BuildContext ctx,IconData icon, Function() clickHandler, {
-    double? elevation, Color? splashColor, Color? backgroundColor,
-  }) {
-    return FloatingActionButton(
-      elevation: elevation,
-      splashColor: splashColor,
-      child: Icon(icon),
-      onPressed: clickHandler,
-      backgroundColor: backgroundColor?? Theme.of(ctx).primaryColor,
-      heroTag: null,
-    );
-  }
 
   static Widget textInput({
     TextEditingController? controller,
@@ -38,22 +26,27 @@ class Util {
       child: TextFormField(
         controller: controller,
         decoration: InputDecoration(
-            border: InputBorder.none, hintText: text, prefixIcon: icon),
+          border: InputBorder.none,
+          hintText: text,
+          prefixIcon: icon,
+        ),
         obscureText: hiddenText ?? false,
+        cursorColor: homeColor,
         textInputAction: action,
+        autofocus: false,
       ),
     );
   }
 
-  static TextFormField textInputWithBorder({
-    required BuildContext ctx,
-    required String label,
-    IconData? icon,
-    TextEditingController? controller,
-    required TextInputAction action,
-    bool? hiddenText,
-    TextInputType? keyboardType,
-  }) {
+  static TextFormField textInputWithBorder(
+      {required BuildContext ctx,
+      required String label,
+      IconData? icon,
+      TextEditingController? controller,
+      required TextInputAction action,
+      bool? hiddenText,
+      TextInputType? keyboardType,
+      bool autoFocus = false}) {
     final primaryColor = Theme.of(ctx).primaryColor;
     final UnderlineInputBorder focusedBorder = UnderlineInputBorder(
       borderSide: BorderSide(color: primaryColor, width: 2.0),
@@ -73,12 +66,13 @@ class Util {
         border: InputBorder.none);
 
     return TextFormField(
-      autofocus: false,
+      autofocus: autoFocus,
       controller: controller,
       textInputAction: action,
       decoration: decoration,
       obscureText: hiddenText ?? false,
       keyboardType: keyboardType,
+      cursorColor: homeColor,
     );
   }
 }
