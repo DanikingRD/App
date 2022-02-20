@@ -1,37 +1,60 @@
-import 'package:digital_card_app/client/screen/auth/registration/setup_account.dart';
+import 'package:digital_card_app/client/screen/registration/registration_screen.dart';
 import 'package:digital_card_app/common/constants.dart';
-import 'package:digital_card_app/common/util/util.dart';
+import 'package:digital_card_app/common/widget/text_input.dart';
 import 'package:digital_card_app/server/auth_service.dart';
 import 'package:flutter/material.dart';
 
 //TO-DO: IMPLEMENT CUPERTINO STYLE FOR IOS
-class AuthScreen extends StatelessWidget {
-
+class AuthScreen extends StatefulWidget {
   static const String identifier = '/auth';
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
 
   AuthScreen({Key? key}) : super(key: key);
 
+  @override
+  State<AuthScreen> createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  Color? iconColor;
+
+  void setColor() {
+    iconColor = homeColor;
+  }
   @override
   Widget build(BuildContext context) {
     final screenData = ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
     final AuthService authService = screenData['auth_service'] as AuthService;
     final Gradient linearGradient = screenData['gradient'] as Gradient;
     final themeData = Theme.of(context);
-    final emailInput = Util.textInput(
-        color: Colors.white,
-        icon: const Icon(Icons.email),
-        text: 'Enter your email');
-    final passwordInput = Util.textInput(
-        color: Colors.white,
-        icon: const Icon(Icons.vpn_key),
-        hiddenText: true,
-        text: 'Enter your password');
+    final emailInput = TextInputForm.decoratedTextInput(
+      label: 'Enter your email',
+      action: TextInputAction.next,
+      keybardType: TextInputType.emailAddress,
+      icon: Icon(Icons.email, color: iconColor),
+      controller: emailController,
+      onSaved: (value) {
+        emailController.text = value!;
+        setState(() {
+          setColor();
+        });
+      }
+    );
+    final passwordInput = TextInputForm.decoratedTextInput(
+      label: 'Enter your password',
+      action: TextInputAction.done,
+      obscureText: true,
+      icon: const Icon(Icons.vpn_key),
+      controller: passwordController
+    );
     final loginButton = ElevatedButton(
-      child: const Text('LOGIN', style: TextStyle(fontFamily: 'NotoSans', fontSize: 18, color: homeColor)),
+      child: const Text('LOGIN',
+          style: TextStyle(
+              fontFamily: 'NotoSans', fontSize: 18, color: homeColor)),
       style: TextButton.styleFrom(
-          shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           padding: const EdgeInsets.all(24),
           backgroundColor: themeData.backgroundColor),
       onPressed: (() async {
@@ -40,7 +63,7 @@ class AuthScreen extends StatelessWidget {
     );
 
     return Scaffold(
-      body: SingleChildScrollView(
+        body: SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
           gradient: linearGradient,
@@ -52,18 +75,25 @@ class AuthScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset('assets/image/logo.png'),
-            const Text('Login details',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white)),
+            const Text('Login details',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white)),
             const SizedBox(height: 25),
             emailInput,
             const SizedBox(height: 25),
             passwordInput,
             const SizedBox(height: 30),
-            SizedBox(width: double.infinity, child: loginButton,),
+            SizedBox(
+              width: double.infinity,
+              child: loginButton,
+            ),
             const SizedBox(height: 15),
             Container(
               alignment: Alignment.centerRight,
               child: GestureDetector(
-                onTap: () {},   
+                onTap: () {},
                 child: const Text('Forgot password?',
                     style: TextStyle(color: Colors.white)),
               ),
@@ -93,6 +123,6 @@ class AuthScreen extends StatelessWidget {
   }
 
   void openSetupScreen(BuildContext ctx, AuthService service) {
-      Navigator.pushNamed(ctx, SetupAccountScreen.identifier, arguments: service);
+    Navigator.pushNamed(ctx, RegistrationScreen.identifier, arguments: service);
   }
 }

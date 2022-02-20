@@ -1,5 +1,4 @@
 import 'package:digital_card_app/client/screen/auth/auth_screen.dart';
-import 'package:digital_card_app/client/screen/auth/registration/setup_account.dart';
 import 'package:digital_card_app/server/auth_service.dart';
 import 'package:flutter/material.dart';
 
