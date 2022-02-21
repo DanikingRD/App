@@ -80,6 +80,8 @@ class UnderlinedTextInput extends TextFormField {
     Color borderColor = homeColor,
     TextStyle? labelStyle,
     Icon? prefixIcon,
+    FormFieldValidator<String>? validator,
+    ValueChanged<String>? onChanged,
 
   }) : super(
         decoration: InputDecoration(
@@ -100,5 +102,7 @@ class UnderlinedTextInput extends TextFormField {
         obscureText: obscureText,
         keyboardType: keyboardType,
         cursorColor: homeColor,
+        validator: validator,
+        onChanged: onChanged
       );
 }

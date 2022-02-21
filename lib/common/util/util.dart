@@ -1,6 +1,7 @@
 
 class Util {
   Util._(); // Utility class not meant to be instantiated
+
 }
 
 enum NavigationDir {
@@ -8,3 +9,4 @@ enum NavigationDir {
   previous,
 }
 
+typedef Predicate<E> = bool Function(E element);

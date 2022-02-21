@@ -1,4 +1,4 @@
-import 'package:digital_card_app/client/screen/registration/contact_page.dart';
+import 'package:digital_card_app/client/screen/registration/pages/contact.dart';
 import 'package:digital_card_app/client/screen/registration/registration_screen.dart';
 import 'package:digital_card_app/client/transition/registration_page_trasition.dart';
 import 'package:digital_card_app/common/constants.dart';

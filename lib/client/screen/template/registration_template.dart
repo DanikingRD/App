@@ -5,23 +5,28 @@ import 'package:digital_card_app/common/widget/forms.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationPageTemplate extends StatelessWidget {
+
   final String header;
   final String firstInputLabel;
   final String secondInputLabel;
   final Widget nextWidget;
-  final GlobalKey<FormState> uniqueKey;
+  final GlobalKey<FormState> globalKey;
   final VoidCallback? clickHandler;
-  final VoidCallback? validation;
+  final FormFieldValidator<String>? firstValidator;
+  final FormFieldValidator<String>? secondValidator;
+  final TextEditingController firstInputController = TextEditingController();
+  final TextEditingController secondInputController = TextEditingController();
 
-  const RegistrationPageTemplate({
+  RegistrationPageTemplate({Key? key, 
     required this.header,
     required this.firstInputLabel,
     required this.secondInputLabel,
     required this.nextWidget,
-    required this.uniqueKey,
+    required this.globalKey,
     this.clickHandler,
-    this.validation, //TODO: trigger validation
-  });
+    this.firstValidator,
+    this.secondValidator,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,7 @@ class RegistrationPageTemplate extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       body: Form(
-        key: uniqueKey,
+        key: globalKey,
         child: Padding(
           padding: edge,
           child: SizedBox(
@@ -53,18 +58,31 @@ class RegistrationPageTemplate extends StatelessWidget {
                   autoFocusable: true,
                   label: firstInputLabel,
                   inputAction: TextInputAction.next,
+                  validator: firstValidator,
+                  controller: firstInputController,
+                  onChanged: (text) {
+                    if (text.isNotEmpty) {
+                      checkInput();
+                    }
+                  },
+                  onSaved: (input) => firstInputController.text = input!,
                 ),
                 UnderlinedTextInput(
                   label: secondInputLabel,
                   inputAction: TextInputAction.done,
+                  validator: secondValidator,
+                  controller: secondInputController,
+                  onChanged: (text) {
+                    if (text.isNotEmpty) {
+                        checkInput();
+                    }
+                  } ,
+                  onSaved: (input) => secondInputController.text = input!,
                 ),
                 const SizedBox(height: 32),
                 Align(
                   alignment: Alignment.topRight,
-                  child: NavigationButton(
-                    onPressed: clickHandler ??
-                        RegistrationScreen.navigateTo(
-                            context, nextWidget, uniqueKey),
+                  child: LockedNavigationButton(
                     dir: NavigationDir.next,
                   ),
                 )
@@ -74,5 +92,15 @@ class RegistrationPageTemplate extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void checkInput() {
+    final form = globalKey.currentState!;
+    if (form.validate()) {
+        form.save();
+        print('Form valid!');
+    } else {
+      print("Not valid dude");
+    }
   }
 }

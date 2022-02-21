@@ -19,7 +19,13 @@ class NavigationButton extends FloatingActionButton {
     foregroundColor: foregroundColor,
     elevation: elevation,
     heroTag: heroTag,
+    hoverElevation: 0,
+    disabledElevation: 0,
+    focusElevation: 0,
     highlightElevation: 0,
+    focusColor: Colors.transparent,
+    splashColor: Colors.transparent,
+    hoverColor: Colors.transparent,
 
   ); 
 
@@ -55,3 +61,23 @@ class TransparentNavigationButton extends NavigationButton {
       
     ); 
 }
+
+class LockedNavigationButton extends NavigationButton {
+  LockedNavigationButton({
+    Key? key, 
+    required NavigationDir dir,
+    Object? heroTag,
+    double elevation = 5.0,
+    Color? backgroundColor = lockedFloatingButtonColor,
+    Color? foregroundColor = Colors.white,
+  }) : super(
+      dir: dir,
+      key: key, 
+      onPressed: null, 
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      elevation: elevation,
+      heroTag: heroTag,
+    ); 
+}
+
