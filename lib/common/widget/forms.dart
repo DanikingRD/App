@@ -1,4 +1,4 @@
-import 'package:digital_card_app/common/constants.dart';
+import 'package:digital_card_app/common/colors.dart';
 import 'package:flutter/material.dart';
 
 class TextInputForm extends TextFormField {
@@ -13,7 +13,8 @@ class TextInputForm extends TextFormField {
     TextInputType? keyboardType,
     TextEditingController? controller,
     bool autoFocusable = false,
-    FormFieldSetter<String>? onSaved
+    ValueChanged<String>? onChanged,
+    FormFieldSetter<String>? onSaved,
   }) : super(
           key: key,
           decoration: InputDecoration(
@@ -22,12 +23,12 @@ class TextInputForm extends TextFormField {
             prefixIcon: icon,
           ),
           cursorColor: homeColor,
-          
           textInputAction: inputAction,
           obscureText: obscureText,
           keyboardType: keyboardType,
           controller: controller,
           autofocus: autoFocusable,
+          onChanged: onChanged,
           onSaved: onSaved
       );
   static Widget decoratedTextInput({
@@ -40,7 +41,8 @@ class TextInputForm extends TextFormField {
     TextEditingController? controller,
     bool autoFocusable = false,
     Icon? icon,
-    FormFieldSetter<String>? onSaved
+    ValueChanged<String>? onChanged,
+    FormFieldSetter<String>? onSaved,
   }) {
     return Container(
       decoration: BoxDecoration(
@@ -59,6 +61,7 @@ class TextInputForm extends TextFormField {
         autoFocusable: autoFocusable,
         icon: icon,
         controller: controller,
+        onChanged: onChanged,
         onSaved: onSaved,
       ),
     );

@@ -1,7 +1,6 @@
-import 'package:digital_card_app/client/screen/registration/pages/contact.dart';
 import 'package:digital_card_app/client/screen/registration/registration_screen.dart';
 import 'package:digital_card_app/client/transition/registration_page_trasition.dart';
-import 'package:digital_card_app/common/constants.dart';
+import 'package:digital_card_app/common/colors.dart';
 import 'package:digital_card_app/common/widget/forms.dart';
 import 'package:digital_card_app/server/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -24,32 +23,29 @@ class _AuthScreenState extends State<AuthScreen> {
   void setColor() {
     iconColor = homeColor;
   }
+
   @override
   Widget build(BuildContext context) {
-    final screenData = ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
+    final screenData =
+        ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
     final AuthService authService = screenData['auth_service'] as AuthService;
     final Gradient linearGradient = screenData['gradient'] as Gradient;
     final themeData = Theme.of(context);
     final emailInput = TextInputForm.decoratedTextInput(
-      label: 'Enter your email',
-      action: TextInputAction.next,
-      keybardType: TextInputType.emailAddress,
-      icon: Icon(Icons.email, color: iconColor),
-      controller: emailController,
-      onSaved: (value) {
-        emailController.text = value!;
-        setState(() {
-          setColor();
+        label: 'Enter your email',
+        action: TextInputAction.next,
+        keybardType: TextInputType.emailAddress,
+        icon: Icon(Icons.email, color: iconColor),
+        controller: emailController,
+        onSaved: (value) {
+          emailController.text = value!;
         });
-      }
-    );
     final passwordInput = TextInputForm.decoratedTextInput(
-      label: 'Enter your password',
-      action: TextInputAction.done,
-      obscureText: true,
-      icon: const Icon(Icons.vpn_key),
-      controller: passwordController
-    );
+        label: 'Enter your password',
+        action: TextInputAction.done,
+        obscureText: true,
+        icon: const Icon(Icons.vpn_key),
+        controller: passwordController);
     final loginButton = ElevatedButton(
       child: const Text('LOGIN',
           style: TextStyle(
@@ -63,7 +59,6 @@ class _AuthScreenState extends State<AuthScreen> {
         // Future<UserCredential?> result = _service.signIn(emailController.text, passwordController.text);
       }),
     );
-
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
@@ -125,6 +120,7 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void openSetupScreen(BuildContext ctx, AuthService service) {
-    Navigator.push(context, RegistrationPageTransition(child: const RegistrationScreen()));
+    Navigator.push(
+        context, RegistrationPageTransition(child: const RegistrationScreen()));
   }
 }

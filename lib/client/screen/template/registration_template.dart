@@ -1,11 +1,10 @@
-import 'package:digital_card_app/client/screen/registration/registration_screen.dart';
+import 'package:digital_card_app/client/transition/registration_page_trasition.dart';
 import 'package:digital_card_app/common/util/util.dart';
 import 'package:digital_card_app/common/widget/buttons.dart';
 import 'package:digital_card_app/common/widget/forms.dart';
 import 'package:flutter/material.dart';
 
-class RegistrationPageTemplate extends StatelessWidget {
-
+class RegistrationPageTemplate extends StatefulWidget {
   final String header;
   final String firstInputLabel;
   final String secondInputLabel;
@@ -14,10 +13,13 @@ class RegistrationPageTemplate extends StatelessWidget {
   final VoidCallback? clickHandler;
   final FormFieldValidator<String>? firstValidator;
   final FormFieldValidator<String>? secondValidator;
-  final TextEditingController firstInputController = TextEditingController();
-  final TextEditingController secondInputController = TextEditingController();
+  final TextInputType? firstKeyboardType;
+  final TextInputType? secondKeyboardType;
+  final bool canHaveEmptyFields;
+  final String? explanation;
 
-  RegistrationPageTemplate({Key? key, 
+  const RegistrationPageTemplate({
+    Key? key,
     required this.header,
     required this.firstInputLabel,
     required this.secondInputLabel,
@@ -26,11 +28,32 @@ class RegistrationPageTemplate extends StatelessWidget {
     this.clickHandler,
     this.firstValidator,
     this.secondValidator,
+    this.firstKeyboardType,
+    this.secondKeyboardType,
+    this.canHaveEmptyFields = true,
+    this.explanation,
   }) : super(key: key);
+
+  @override
+  State<RegistrationPageTemplate> createState() =>
+      _RegistrationPageTemplateState();
+}
+
+class _RegistrationPageTemplateState extends State<RegistrationPageTemplate> {
+  final TextEditingController firstInputController = TextEditingController();
+  final TextEditingController secondInputController = TextEditingController();
+
+  bool _validated = false;
 
   @override
   Widget build(BuildContext context) {
     const edge = EdgeInsets.symmetric(horizontal: 32, vertical: 64);
+    var navigationButton = NavigationButton(
+        onPressed: () {
+          Navigator.push(
+              context, RegistrationPageTransition(child: widget.nextWidget));
+        },
+        dir: NavigationDir.next);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButton: SizedBox(
@@ -38,11 +61,13 @@ class RegistrationPageTemplate extends StatelessWidget {
         height: 48,
         child: TransparentNavigationButton(
             dir: NavigationDir.previous,
-            onPressed: RegistrationScreen.navigateBack(context)),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       body: Form(
-        key: globalKey,
+        key: widget.globalKey,
         child: Padding(
           padding: edge,
           child: SizedBox(
@@ -52,39 +77,39 @@ class RegistrationPageTemplate extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 24),
-                Text(header, style: const TextStyle(fontSize: 24)),
-                const SizedBox(height: 32),
+                Text(widget.header, style: const TextStyle(fontSize: 24)),
+                widget.explanation == null
+                    ? const SizedBox(height: 32)
+                    : Text(widget.explanation as String),
                 UnderlinedTextInput(
                   autoFocusable: true,
-                  label: firstInputLabel,
+                  label: widget.firstInputLabel,
                   inputAction: TextInputAction.next,
-                  validator: firstValidator,
+                  validator: widget.firstValidator,
                   controller: firstInputController,
+                  keyboardType: widget.firstKeyboardType,
                   onChanged: (text) {
-                    if (text.isNotEmpty) {
-                      checkInput();
-                    }
+                    checkAllInputs();
                   },
-                  onSaved: (input) => firstInputController.text = input!,
                 ),
                 UnderlinedTextInput(
-                  label: secondInputLabel,
+                  label: widget.secondInputLabel,
                   inputAction: TextInputAction.done,
-                  validator: secondValidator,
+                  validator: widget.secondValidator,
                   controller: secondInputController,
+                  keyboardType: widget.secondKeyboardType,
                   onChanged: (text) {
-                    if (text.isNotEmpty) {
-                        checkInput();
-                    }
-                  } ,
-                  onSaved: (input) => secondInputController.text = input!,
+                    checkAllInputs();
+                  },
                 ),
                 const SizedBox(height: 32),
                 Align(
                   alignment: Alignment.topRight,
-                  child: LockedNavigationButton(
-                    dir: NavigationDir.next,
-                  ),
+                  child: widget.canHaveEmptyFields
+                      ? navigationButton
+                      : !_validated
+                          ? LockedNavigationButton(dir: NavigationDir.next)
+                          : navigationButton,
                 )
               ],
             ),
@@ -94,13 +119,17 @@ class RegistrationPageTemplate extends StatelessWidget {
     );
   }
 
-  void checkInput() {
-    final form = globalKey.currentState!;
+  void checkAllInputs() {
+    final form = widget.globalKey.currentState!;
     if (form.validate()) {
-        form.save();
-        print('Form valid!');
+      setState(() {
+        _validated = true;
+      });
+      form.save();
     } else {
-      print("Not valid dude");
+      setState(() {
+        _validated = false;
+      });
     }
   }
 }

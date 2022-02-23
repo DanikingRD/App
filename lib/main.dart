@@ -1,7 +1,7 @@
 import 'package:digital_card_app/client/screen/auth/auth_screen.dart';
 import 'package:digital_card_app/client/screen/registration/registration_screen.dart';
 import 'package:digital_card_app/client/screen/welcome/welcome_screen.dart';
-import 'package:digital_card_app/common/constants.dart';
+import 'package:digital_card_app/common/colors.dart';
 import 'package:digital_card_app/server/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
