@@ -20,35 +20,37 @@ final GetPage authPage = GetPage(
 
 class RegistrationScreen {
   static const transitionDuration = Duration(milliseconds: 250);
+  static const pageTransition = Transition.rightToLeft;
+
   static final GetPage nameInputPage = GetPage(
     name: '/name',
     page: () => NameInputPage(),
-    transition: Transition.leftToRight,
+    transition: pageTransition,
     transitionDuration: transitionDuration,
   );
   static final GetPage contactInputPage = GetPage(
     name: '/contact',
     page: () => ContactInputPage(),
-    transition: Transition.leftToRight,
+    transition: pageTransition,
     transitionDuration: transitionDuration,
   );
   static final GetPage passwordInputPage = GetPage(
     name: '/password',
     page: () => PasswordPage(),
-    transition: Transition.leftToRight,
+    transition: pageTransition,
     transitionDuration: transitionDuration,
   );
   static final GetPage loadingPage = GetPage(
     name: '/finishing_registration',
     page: () => const LoadingScreen(),
-    transition: Transition.leftToRight,
+    transition: pageTransition,
     transitionDuration: transitionDuration,
   );
 }
 
 final GetPage homePage = GetPage(
   name: '/home',
-  page: () => HomeScreen(),
+  page: () => const HomeScreen(),
 );
 
 List<GetPage<dynamic>> setupNavigation() {
