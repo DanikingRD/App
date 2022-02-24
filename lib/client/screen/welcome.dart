@@ -1,14 +1,13 @@
-import 'package:digital_card_app/client/screen/auth/auth_screen.dart';
-import 'package:digital_card_app/server/auth_service.dart';
+import 'package:digital_card_app/client/screen/pages.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  
-  final AuthService _service; 
-  
+  //final AuthService _service;
+
   static const String identifier = '/welcome';
 
-  const WelcomeScreen(this._service, {key}) : super(key: key);
+  const WelcomeScreen({key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,11 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 80),
               Image.asset('assets/image/logo.png'),
               const SizedBox(height: 15),
-              const Text('Tapea', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+              const Text('Tapea',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold)),
               const SizedBox(height: 30),
               InkWell(
                 onTap: () {},
@@ -42,21 +45,20 @@ class WelcomeScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white
-                  ),
-                  child: const Text('GET STARTED', style: TextStyle(color: Colors.red, fontSize: 20)),
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white),
+                  child: const Text('GET STARTED',
+                      style: TextStyle(color: Colors.red, fontSize: 20)),
                 ),
               ),
               const SizedBox(height: 30),
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, AuthScreen.identifier, arguments: {
-                    'auth_service': _service,
-                    'gradient': linearGradient 
-                  });
+                  Get.toNamed(authPage.name, arguments: linearGradient);
                 },
-                child: const Text('LOG IN WITH EXISTING ACCOUNT', style: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold)),
+                child: const Text('LOG IN WITH EXISTING ACCOUNT',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
               ),
             ],
           ),

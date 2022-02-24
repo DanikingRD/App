@@ -1,11 +1,11 @@
-import 'package:digital_card_app/client/screen/auth/auth_screen.dart';
-import 'package:digital_card_app/client/screen/registration/registration_screen.dart';
-import 'package:digital_card_app/client/screen/welcome/welcome_screen.dart';
+import 'package:digital_card_app/client/screen/pages.dart';
+import 'package:digital_card_app/client/screen/welcome.dart';
 import 'package:digital_card_app/common/colors.dart';
 import 'package:digital_card_app/server/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,28 +14,22 @@ Future<void> main(List<String> args) async {
 }
 
 class Main extends StatelessWidget {
-
-   static final AuthService _service = AuthService(FirebaseAuth.instance);
-
+  static final AuthService _service = AuthService(FirebaseAuth.instance);
+  //TO-DO: Look at visual density
   @override
   Widget build(BuildContext context) {
     const themeColor = homeColor;
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Digital Card App',
+      getPages: setupNavigation(),
       theme: ThemeData(
         primaryColor: themeColor,
         backgroundColor: Colors.white,
         fontFamily: 'FiraSans',
-        colorScheme: ThemeData().colorScheme.copyWith(
-          primary: themeColor
-        ),
+        colorScheme: ThemeData().colorScheme.copyWith(primary: themeColor),
       ),
-      home: WelcomeScreen(_service),
-      routes: {
-        AuthScreen.identifier: (ctx) => AuthScreen(),
-      } ,
-    );  
+      home: const WelcomeScreen(),
+    );
   }
 }
-

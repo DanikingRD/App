@@ -1,15 +1,14 @@
-import 'package:digital_card_app/client/screen/registration/registration_screen.dart';
-import 'package:digital_card_app/client/transition/registration_page_trasition.dart';
+import 'package:digital_card_app/client/screen/pages.dart';
 import 'package:digital_card_app/common/colors.dart';
 import 'package:digital_card_app/common/widget/forms.dart';
-import 'package:digital_card_app/server/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 //TO-DO: IMPLEMENT CUPERTINO STYLE FOR IOS
 class AuthScreen extends StatefulWidget {
   static const String identifier = '/auth';
 
-  AuthScreen({Key? key}) : super(key: key);
+  const AuthScreen({Key? key}) : super(key: key);
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -26,10 +25,6 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenData =
-        ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
-    final AuthService authService = screenData['auth_service'] as AuthService;
-    final Gradient linearGradient = screenData['gradient'] as Gradient;
     final themeData = Theme.of(context);
     final emailInput = TextInputForm.decoratedTextInput(
         label: 'Enter your email',
@@ -63,7 +58,7 @@ class _AuthScreenState extends State<AuthScreen> {
         body: SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
-          gradient: linearGradient,
+          gradient: Get.arguments,
         ),
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -102,7 +97,8 @@ class _AuthScreenState extends State<AuthScreen> {
                 const Text('Not a member yet? ',
                     style: TextStyle(color: Colors.white)),
                 GestureDetector(
-                  onTap: () => openSetupScreen(context, authService),
+                  onTap: () =>
+                      Get.toNamed(RegistrationScreen.nameInputPage.name),
                   child: const Text(
                     'SignUp',
                     style: TextStyle(
@@ -117,10 +113,5 @@ class _AuthScreenState extends State<AuthScreen> {
         ),
       ),
     ));
-  }
-
-  void openSetupScreen(BuildContext ctx, AuthService service) {
-    Navigator.push(
-        context, RegistrationPageTransition(child: const RegistrationScreen()));
   }
 }

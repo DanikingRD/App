@@ -2,7 +2,6 @@ import 'package:digital_card_app/common/colors.dart';
 import 'package:flutter/material.dart';
 
 class TextInputForm extends TextFormField {
-  
   TextInputForm({
     Key? key,
     required String label,
@@ -16,21 +15,20 @@ class TextInputForm extends TextFormField {
     ValueChanged<String>? onChanged,
     FormFieldSetter<String>? onSaved,
   }) : super(
-          key: key,
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: label,
-            prefixIcon: icon,
-          ),
-          cursorColor: homeColor,
-          textInputAction: inputAction,
-          obscureText: obscureText,
-          keyboardType: keyboardType,
-          controller: controller,
-          autofocus: autoFocusable,
-          onChanged: onChanged,
-          onSaved: onSaved
-      );
+            key: key,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: label,
+              prefixIcon: icon,
+            ),
+            cursorColor: homeColor,
+            textInputAction: inputAction,
+            obscureText: obscureText,
+            keyboardType: keyboardType,
+            controller: controller,
+            autofocus: autoFocusable,
+            onChanged: onChanged,
+            onSaved: onSaved);
   static Widget decoratedTextInput({
     required String label,
     Color backgroundColor = Colors.white,
@@ -85,27 +83,33 @@ class UnderlinedTextInput extends TextFormField {
     Icon? prefixIcon,
     FormFieldValidator<String>? validator,
     ValueChanged<String>? onChanged,
-
   }) : super(
-        decoration: InputDecoration(
-          labelText: label,
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Color.fromARGB(255, 112, 112, 112), width: 2.0)
+          decoration: InputDecoration(
+            labelText: label,
+            enabledBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(112, 112, 112, 1),
+                width: 2.0,
+              ),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: borderColor,
+                width: 2.0,
+              ),
+            ),
+            contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+            floatingLabelStyle: labelStyle,
+            prefixIcon: prefixIcon,
           ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: borderColor, width: 2.0)
-          ),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          floatingLabelStyle: labelStyle,
-          prefixIcon: prefixIcon,
-        ),
-        autofocus: autoFocusable,
-        controller: controller,
-        textInputAction: inputAction,
-        obscureText: obscureText,
-        keyboardType: keyboardType,
-        cursorColor: homeColor,
-        validator: validator,
-        onChanged: onChanged
-      );
+          autofocus: autoFocusable,
+          controller: controller,
+          textInputAction: inputAction,
+          obscureText: obscureText,
+          keyboardType: keyboardType,
+          cursorColor: homeColor,
+          validator: validator,
+          onChanged: onChanged,
+        
+        );
 }

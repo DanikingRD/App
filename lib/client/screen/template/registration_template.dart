@@ -1,14 +1,14 @@
-import 'package:digital_card_app/client/transition/registration_page_trasition.dart';
 import 'package:digital_card_app/common/util/util.dart';
 import 'package:digital_card_app/common/widget/buttons.dart';
 import 'package:digital_card_app/common/widget/forms.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RegistrationPageTemplate extends StatefulWidget {
   final String header;
   final String firstInputLabel;
   final String secondInputLabel;
-  final Widget nextWidget;
+  final String nextPageId;
   final GlobalKey<FormState> globalKey;
   final VoidCallback? clickHandler;
   final FormFieldValidator<String>? firstValidator;
@@ -17,13 +17,17 @@ class RegistrationPageTemplate extends StatefulWidget {
   final TextInputType? secondKeyboardType;
   final bool canHaveEmptyFields;
   final String? explanation;
+  final bool hideFirstInputText;
+  final bool hideSecondInputText;
+  final TextEditingController firstInputController = TextEditingController();
+  final TextEditingController secondInputController = TextEditingController();
 
-  const RegistrationPageTemplate({
+  RegistrationPageTemplate({
     Key? key,
     required this.header,
     required this.firstInputLabel,
     required this.secondInputLabel,
-    required this.nextWidget,
+    required this.nextPageId,
     required this.globalKey,
     this.clickHandler,
     this.firstValidator,
@@ -32,17 +36,16 @@ class RegistrationPageTemplate extends StatefulWidget {
     this.secondKeyboardType,
     this.canHaveEmptyFields = true,
     this.explanation,
+    this.hideFirstInputText = false,
+    this.hideSecondInputText = false,
   }) : super(key: key);
 
   @override
   State<RegistrationPageTemplate> createState() =>
-      _RegistrationPageTemplateState();
+      RegistrationPageTemplateState();
 }
 
-class _RegistrationPageTemplateState extends State<RegistrationPageTemplate> {
-  final TextEditingController firstInputController = TextEditingController();
-  final TextEditingController secondInputController = TextEditingController();
-
+class RegistrationPageTemplateState extends State<RegistrationPageTemplate> {
   bool _validated = false;
 
   @override
@@ -50,8 +53,7 @@ class _RegistrationPageTemplateState extends State<RegistrationPageTemplate> {
     const edge = EdgeInsets.symmetric(horizontal: 32, vertical: 64);
     var navigationButton = NavigationButton(
         onPressed: () {
-          Navigator.push(
-              context, RegistrationPageTransition(child: widget.nextWidget));
+          Get.toNamed(widget.nextPageId);
         },
         dir: NavigationDir.next);
     return Scaffold(
@@ -78,15 +80,18 @@ class _RegistrationPageTemplateState extends State<RegistrationPageTemplate> {
               children: [
                 const SizedBox(height: 24),
                 Text(widget.header, style: const TextStyle(fontSize: 24)),
-                widget.explanation == null
-                    ? const SizedBox(height: 32)
-                    : Text(widget.explanation as String),
+                const SizedBox(height: 20),
+                widget.explanation != null
+                    ? Text(widget.explanation as String)
+                    : const SizedBox(),
+                const SizedBox(height: 5),
                 UnderlinedTextInput(
                   autoFocusable: true,
+                  obscureText: widget.hideFirstInputText,
                   label: widget.firstInputLabel,
                   inputAction: TextInputAction.next,
                   validator: widget.firstValidator,
-                  controller: firstInputController,
+                  controller: widget.firstInputController,
                   keyboardType: widget.firstKeyboardType,
                   onChanged: (text) {
                     checkAllInputs();
@@ -94,9 +99,10 @@ class _RegistrationPageTemplateState extends State<RegistrationPageTemplate> {
                 ),
                 UnderlinedTextInput(
                   label: widget.secondInputLabel,
+                  obscureText: widget.hideSecondInputText,
                   inputAction: TextInputAction.done,
                   validator: widget.secondValidator,
-                  controller: secondInputController,
+                  controller: widget.secondInputController,
                   keyboardType: widget.secondKeyboardType,
                   onChanged: (text) {
                     checkAllInputs();
