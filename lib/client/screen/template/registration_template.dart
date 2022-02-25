@@ -1,3 +1,4 @@
+import 'package:digital_card_app/common/colors.dart';
 import 'package:digital_card_app/common/util/util.dart';
 import 'package:digital_card_app/common/widget/buttons.dart';
 import 'package:digital_card_app/common/widget/forms.dart';
@@ -50,35 +51,39 @@ class RegistrationPageTemplateState extends State<RegistrationPageTemplate> {
 
   @override
   Widget build(BuildContext context) {
-    const edge = EdgeInsets.symmetric(horizontal: 32, vertical: 64);
+    const edge = EdgeInsets.symmetric(horizontal: 32);
     var navigationButton = NavigationButton(
-        onPressed: () {
-          Get.toNamed(widget.nextPageId);
-        },
-        dir: NavigationDir.next);
+      onPressed: () {
+        Get.toNamed(widget.nextPageId);
+      },
+      dir: NavigationDir.next,
+    );
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      floatingActionButton: SizedBox(
-        width: 48,
-        height: 48,
-        child: TransparentNavigationButton(
-            dir: NavigationDir.previous,
-            onPressed: () {
-              Navigator.pop(context);
-            }),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          splashRadius: Material.defaultSplashRadius * 0.55,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.navigate_before_sharp,
+            size: 40,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        foregroundColor: homeColor,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      body: Form(
-        key: widget.globalKey,
-        child: Padding(
-          padding: edge,
-          child: SizedBox(
-            width: double.infinity,
-            height: double.infinity,
+      body: SingleChildScrollView(
+        reverse: true,
+        child: Form(
+          key: widget.globalKey,
+          child: Padding(
+            padding: edge,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 24),
                 Text(widget.header, style: const TextStyle(fontSize: 24)),
                 const SizedBox(height: 20),
                 widget.explanation != null
@@ -108,7 +113,7 @@ class RegistrationPageTemplateState extends State<RegistrationPageTemplate> {
                     checkAllInputs();
                   },
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 25),
                 Align(
                   alignment: Alignment.topRight,
                   child: widget.canHaveEmptyFields

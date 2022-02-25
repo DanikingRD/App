@@ -28,6 +28,7 @@ class Main extends StatelessWidget {
         backgroundColor: Colors.white,
         fontFamily: 'FiraSans',
         colorScheme: ThemeData().colorScheme.copyWith(primary: themeColor),
+        appBarTheme: AppBarTheme(),
       ),
       home: const WelcomeScreen(),
     );
