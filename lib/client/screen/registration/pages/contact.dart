@@ -4,21 +4,21 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 class ContactInputPage extends StatelessWidget {
-  
-  final GlobalKey<FormState> _key = GlobalKey();
+  final GlobalKey<RegistrationFormTemplateState> formKey = GlobalKey();
 
-  ContactInputPage();
+  ContactInputPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const emailErrorMsg = 'Enter a valid email address';
     const phoneNumberErrorMsg = 'Enter a valid phone number';
-    return RegistrationPageTemplate(
+    return RegistrationFormTemplate(
+      state: formKey,
       header: 'How do we contact you?',
       firstInputLabel: 'Email Address',
       secondInputLabel: 'Phone Number',
       nextPageId: RegistrationScreen.passwordInputPage.name,
-      globalKey: _key,
+      globalKey: GlobalKey(),
       firstKeyboardType: TextInputType.emailAddress,
       secondKeyboardType: TextInputType.emailAddress,
       canHaveEmptyFields: false,
@@ -28,6 +28,8 @@ class ContactInputPage extends StatelessWidget {
       secondValidator: (text) {
         return text!.isNotEmpty ? null : phoneNumberErrorMsg;
       },
+      savedOnFirstInput: RegistrationFormData.email,
+      savedOnSecondInput: RegistrationFormData.phoneNumber,
     );
   }
 }

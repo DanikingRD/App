@@ -1,4 +1,4 @@
-import 'package:digital_card_app/common/colors.dart';
+import 'package:digital_card_app/common/constants.dart';
 import 'package:digital_card_app/common/util/util.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +14,10 @@ class NavigationButton extends FloatingActionButton {
   }) : super(
           key: key,
           onPressed: onPressed,
-          child: Icon(getIcon(dir)),
+          child: Icon(
+            getIcon(dir),
+            size: 40,
+          ),
           backgroundColor: backgroundColor,
           foregroundColor: foregroundColor,
           elevation: elevation,
@@ -34,26 +37,6 @@ class NavigationButton extends FloatingActionButton {
         }
     }
   }
-}
-
-class TransparentNavigationButton extends NavigationButton {
-  TransparentNavigationButton({
-    Key? key,
-    required VoidCallback? onPressed,
-    required NavigationDir dir,
-    Object? heroTag,
-    double elevation = 0.0,
-    Color? backgroundColor = Colors.transparent,
-    Color? foregroundColor = homeColor,
-  }) : super(
-          dir: dir,
-          key: key,
-          onPressed: onPressed,
-          backgroundColor: backgroundColor,
-          foregroundColor: foregroundColor,
-          elevation: elevation,
-          heroTag: heroTag,
-        );
 }
 
 class LockedNavigationButton extends NavigationButton {

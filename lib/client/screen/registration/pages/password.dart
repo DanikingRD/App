@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class PasswordPage extends StatelessWidget {
-  final GlobalKey<FormState> formKey = GlobalKey();
-  final GlobalKey<RegistrationPageTemplateState> objectKey = GlobalKey();
+  final GlobalKey<RegistrationFormTemplateState> formKey = GlobalKey();
+  static const _requiredPasswordLength = 6;
 
   PasswordPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return RegistrationPageTemplate(
-      key: objectKey,
+    return RegistrationFormTemplate(
+      state: formKey,
       header: 'Create a password',
       firstInputLabel: 'Enter a password',
       secondInputLabel: 'Verify your password',
@@ -20,22 +21,29 @@ class PasswordPage extends StatelessWidget {
       hideFirstInputText: true,
       hideSecondInputText: true,
       canHaveEmptyFields: false,
-      globalKey: formKey,
-      firstValidator: (text) {
-        if (text!.isEmpty) {
+      globalKey: GlobalKey(),
+      firstValidator: (content) {
+        final String data = content!;
+        if (data.isEmpty) {
           return 'The field is required';
+        } else if (data.length < _requiredPasswordLength) {
+          return 'Enter a 6 characters long password';
+        } else {
+          return null;
         }
-        return null;
       },
-      secondValidator: (text) {
-        if (text!.isEmpty) {
+      secondValidator: (content) {
+        final String data = content!;
+        if (data.isEmpty) {
           return 'The field is required';
-        }
-        if (text != objectKey.currentState!.widget.firstInputController.text) {
+        } else if (data !=
+            formKey.currentState!.widget.firstInputController.text) {
           return 'The passwords entered do not match';
+        } else {
+          return null;
         }
-        return null;
       },
+      savedOnSecondInput: RegistrationFormData.password,
     );
   }
 }

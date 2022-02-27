@@ -4,6 +4,7 @@ import 'package:digital_card_app/client/screen/registration/loading_screen.dart'
 import 'package:digital_card_app/client/screen/registration/pages/contact.dart';
 import 'package:digital_card_app/client/screen/registration/pages/name.dart';
 import 'package:digital_card_app/client/screen/registration/pages/password.dart';
+import 'package:digital_card_app/client/screen/user/settings_list.dart';
 import 'package:get/get.dart';
 
 import 'welcome.dart';
@@ -53,6 +54,9 @@ final GetPage homePage = GetPage(
   page: () => const HomeScreen(),
 );
 
+final GetPage settingsListPage =
+    GetPage(name: '/settings_list', page: () => SettingsListScreen());
+
 List<GetPage<dynamic>> setupNavigation() {
   return [
     welcomePage,
@@ -62,5 +66,6 @@ List<GetPage<dynamic>> setupNavigation() {
     RegistrationScreen.passwordInputPage,
     RegistrationScreen.loadingPage,
     homePage,
+    settingsListPage
   ];
 }

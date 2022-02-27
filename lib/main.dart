@@ -1,20 +1,19 @@
 import 'package:digital_card_app/client/screen/pages.dart';
 import 'package:digital_card_app/client/screen/welcome.dart';
-import 'package:digital_card_app/common/colors.dart';
-import 'package:digital_card_app/server/auth_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:digital_card_app/common/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
-  runApp(Main());
+  runApp(const Main());
 }
 
 class Main extends StatelessWidget {
-  static final AuthService _service = AuthService(FirebaseAuth.instance);
+  const Main({Key? key}) : super(key: key);
   //TO-DO: Look at visual density
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,14 @@ class Main extends StatelessWidget {
         backgroundColor: Colors.white,
         fontFamily: 'FiraSans',
         colorScheme: ThemeData().colorScheme.copyWith(primary: themeColor),
-        appBarTheme: AppBarTheme(),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          foregroundColor: homeColor,
+          actionsIconTheme: IconThemeData(
+            color: homeColor,
+          ),
+        ),
       ),
       home: const WelcomeScreen(),
     );

@@ -1,7 +1,10 @@
 import 'package:digital_card_app/client/screen/pages.dart';
-import 'package:digital_card_app/common/colors.dart';
+import 'package:digital_card_app/common/constants.dart';
 import 'package:digital_card_app/common/widget/forms.dart';
+import 'package:digital_card_app/server/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 //TO-DO: IMPLEMENT CUPERTINO STYLE FOR IOS
@@ -18,6 +21,9 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   Color? iconColor;
+  final _formKey = GlobalKey<FormState>();
+
+  final AuthService _authService = AuthService();
 
   void setColor() {
     iconColor = homeColor;
@@ -42,23 +48,25 @@ class _AuthScreenState extends State<AuthScreen> {
         icon: const Icon(Icons.vpn_key),
         controller: passwordController);
     final loginButton = ElevatedButton(
-      child: const Text('LOGIN',
-          style: TextStyle(
-              fontFamily: 'NotoSans', fontSize: 18, color: homeColor)),
+      child: const Text(
+        'LOGIN',
+        style: TextStyle(fontSize: 18, color: homeColor),
+      ),
       style: TextButton.styleFrom(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          padding: const EdgeInsets.all(24),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          padding: const EdgeInsets.all(20),
           backgroundColor: themeData.backgroundColor),
-      onPressed: (() async {
-        // Future<UserCredential?> result = _service.signIn(emailController.text, passwordController.text);
+      onPressed: (() {
+        signIn(emailController.text, passwordController.text);
       }),
     );
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
-        decoration: BoxDecoration(
-          gradient: Get.arguments,
+        decoration: const BoxDecoration(
+          gradient: appGradient,
         ),
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -113,5 +121,28 @@ class _AuthScreenState extends State<AuthScreen> {
         ),
       ),
     ));
+  }
+
+  void signIn(String email, String password) async {
+    await _authService
+        .signIn(email: email, password: password)
+        .then((value) => {
+              Fluttertoast.showToast(
+                msg: 'Login Successful',
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM, // location
+                backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                textColor: Colors.black,
+              ),
+            })
+        .catchError((error) {
+      Fluttertoast.showToast(
+        msg: 'Invalid Credentials',
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM, // location
+        textColor: Colors.black,
+      );
+    });
   }
 }
