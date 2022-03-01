@@ -5,6 +5,7 @@ import 'package:digital_card_app/client/screen/registration/pages/contact.dart';
 import 'package:digital_card_app/client/screen/registration/pages/name.dart';
 import 'package:digital_card_app/client/screen/registration/pages/password.dart';
 import 'package:digital_card_app/client/screen/user/settings_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import 'welcome.dart';
@@ -56,7 +57,7 @@ final GetPage homePage = GetPage(
 
 final GetPage settingsListPage = GetPage(
   name: '/settings_list',
-  page: () => SettingsListScreen(),
+  page: () => SettingsListPage(),
   transition: Transition.leftToRight,
   opaque: false,
 );

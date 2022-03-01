@@ -1,14 +1,22 @@
-import 'package:digital_card_app/client/screen/pages.dart';
 import 'package:digital_card_app/common/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SettingsListScreen extends StatelessWidget {
+class SettingsListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final double globalWidth = Get.width * 0.7;
+    Widget widget = buildContainer();
+    return Draggable(
+      child: widget,
+      feedback: Text(''),
+    );
+  }
+
+  Widget buildContainer() {
+    final double draggableWidth = Get.width * 0.7;
     final double upperHeight = Get.height * 0.3;
-    print('BUILDING');
+    final double remainingHeight = Get.height - upperHeight;
+    final double remainingWidth = Get.width - draggableWidth;
     return Row(
       children: [
         Column(
@@ -16,23 +24,24 @@ class SettingsListScreen extends StatelessWidget {
           children: [
             Container(
               height: upperHeight,
-              width: globalWidth,
+              width: draggableWidth,
               color: homeColor,
             ),
-            Expanded(
-              child: Container(
-                width: globalWidth,
-                color: Colors.black,
-              ),
+            Container(
+              height: remainingHeight,
+              width: draggableWidth,
+              color: Colors.black,
             ),
           ],
         ),
-        Expanded(
+        SizedBox(
+          width: remainingWidth,
+          height: Get.height,
           child: GestureDetector(
             onTap: () {
               Get.back();
             },
-          )
+          ),
         )
       ],
     );
