@@ -3,6 +3,7 @@ import 'package:digital_card_app/client/screen/welcome.dart';
 import 'package:digital_card_app/common/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 Future<void> main(List<String> args) async {
@@ -28,6 +29,10 @@ class Main extends StatelessWidget {
         fontFamily: 'FiraSans',
         colorScheme: ThemeData().colorScheme.copyWith(primary: themeColor),
         appBarTheme: const AppBarTheme(
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Colors.black,
+            statusBarBrightness: Brightness.dark
+          ),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           foregroundColor: homeColor,

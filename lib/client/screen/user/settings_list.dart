@@ -2,13 +2,33 @@ import 'package:digital_card_app/common/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SettingsListPage extends StatelessWidget {
+class SettingsListPage extends StatefulWidget {
+
+  @override
+  State<SettingsListPage> createState() => _SettingsListPageState();
+}
+
+class _SettingsListPageState extends State<SettingsListPage> {
   @override
   Widget build(BuildContext context) {
     Widget widget = buildContainer();
-    return Draggable(
+    return Dismissible(
+      key: UniqueKey(),
       child: widget,
-      feedback: Text(''),
+      direction: DismissDirection.endToStart,
+      confirmDismiss: (dir) async {
+        if (dir == DismissDirection.endToStart) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      onDismissed: (DismissDirection dir ) {
+        setState(() {
+          
+        });
+      } ,
+
     );
   }
 
