@@ -5,7 +5,6 @@ import 'package:digital_card_app/common/util/util.dart';
 import 'package:digital_card_app/common/widget/buttons.dart';
 import 'package:digital_card_app/common/widget/forms.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 enum RegistrationFormData {
   firstName,
@@ -77,10 +76,10 @@ class RegistrationFormTemplateState extends State<RegistrationFormTemplate> {
         if (_validated) {
           widget.globalKey.currentState!.save();
         }
-        Get.toNamed(
-          widget.nextPageId,
-          arguments: form,
-        );
+        // Get.toNamed(
+        //   widget.nextPageId,
+        //   arguments: form,
+        // );
       },
       dir: NavigationDir.next,
     );

@@ -17,7 +17,7 @@ class ContactInputPage extends StatelessWidget {
       header: 'How do we contact you?',
       firstInputLabel: 'Email Address',
       secondInputLabel: 'Phone Number',
-      nextPageId: RegistrationScreen.passwordInputPage.name,
+      nextPageId:'',
       globalKey: GlobalKey(),
       firstKeyboardType: TextInputType.emailAddress,
       secondKeyboardType: TextInputType.emailAddress,

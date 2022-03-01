@@ -4,7 +4,6 @@ import 'package:digital_card_app/common/widget/forms.dart';
 import 'package:digital_card_app/server/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 
 //TO-DO: IMPLEMENT CUPERTINO STYLE FOR IOS
 class AuthScreen extends StatefulWidget {
@@ -104,16 +103,19 @@ class _AuthScreenState extends State<AuthScreen> {
                 const Text('Not a member yet? ',
                     style: TextStyle(color: Colors.white)),
                 GestureDetector(
-                  onTap: () =>
-                      Get.toNamed(RegistrationScreen.nameInputPage.name),
-                  child: const Text(
-                    'SignUp',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: Colors.white),
-                  ),
-                ),
+                  onTap: () => {
+                   //   Get.toNamed(RegistrationScreen.nameInputPage.name),
+                  // child: const Text(
+                  //   'SignUp',
+                  //   style: TextStyle(
+                  //       fontWeight: FontWeight.bold,
+                  //       fontSize: 14,
+                  //       color: Colors.white),
+              
+                  // ),
+                  } 
+                )
+               
               ],
             )
           ],
@@ -127,7 +129,7 @@ class _AuthScreenState extends State<AuthScreen> {
       email: email,
       password: password,
       signInCallback: () {
-        Get.toNamed(homePage.name);
+       // Get.toNamed(homePage.name);
       }
     );
   }

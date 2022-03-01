@@ -6,7 +6,6 @@ import 'package:digital_card_app/common/model/user.dart';
 import 'package:digital_card_app/common/util/util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Get.toNamed(settingsListPage.name);
+         //   Get.toNamed(settingsListPage.name);
           },
           splashRadius: appSplashRadius,
           icon: const Icon(Icons.list),
@@ -72,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           SizedBox(
             child: Image.asset('assets/image/qr_code.png'),
-            height: Get.height / 2,
+         //   height: Get.height / 2,
           ),
           const Divider(thickness: 3.0),
           Expanded(
@@ -146,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         SizedBox(
-          width: Get.width * 0.70,
+         // width: Get.width * 0.70,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

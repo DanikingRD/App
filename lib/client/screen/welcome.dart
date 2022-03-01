@@ -1,7 +1,6 @@
 import 'package:digital_card_app/client/screen/pages.dart';
 import 'package:digital_card_app/common/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class WelcomeScreen extends StatelessWidget {
   //final AuthService _service;
@@ -48,7 +47,7 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 30),
               InkWell(
                 onTap: () {
-                  Get.toNamed(authPage.name);
+                //  Get.toNamed(authPage.name);
                 },
                 child: const Text('LOG IN WITH EXISTING ACCOUNT',
                     style: TextStyle(

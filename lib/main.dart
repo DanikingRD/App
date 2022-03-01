@@ -1,10 +1,8 @@
-import 'package:digital_card_app/client/screen/pages.dart';
 import 'package:digital_card_app/client/screen/welcome.dart';
 import 'package:digital_card_app/common/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,10 +17,10 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const themeColor = homeColor;
-    return GetMaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Digital Card App',
-      getPages: setupNavigation(),
+     // getPages: setupNavigation(),
       theme: ThemeData(
         primaryColor: themeColor,
         backgroundColor: Colors.white,

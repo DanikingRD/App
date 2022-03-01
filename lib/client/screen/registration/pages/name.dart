@@ -12,7 +12,7 @@ class NameInputPage extends StatelessWidget {
       header: 'What\'s your name?',
       firstInputLabel: 'Enter your first name',
       secondInputLabel: 'Enter your last name',
-      nextPageId: RegistrationScreen.contactInputPage.name,
+      nextPageId:'',
       globalKey: GlobalKey(),
       firstKeyboardType: TextInputType.emailAddress,
       secondKeyboardType: TextInputType.emailAddress,

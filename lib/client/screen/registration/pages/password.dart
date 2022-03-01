@@ -16,7 +16,7 @@ class PasswordPage extends StatelessWidget {
       header: 'Create a password',
       firstInputLabel: 'Enter a password',
       secondInputLabel: 'Verify your password',
-      nextPageId: RegistrationScreen.loadingPage.name,
+      nextPageId: '',
       explanation: 'Your password must be at least 6 characters long.',
       hideFirstInputText: true,
       hideSecondInputText: true,
