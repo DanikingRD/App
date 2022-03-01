@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 class Util {
   Util._(); // Utility class not meant to be instantiated
 
@@ -8,6 +11,23 @@ class Util {
     } else {
       return email;
     }
+  }
+
+  static void popUpToast({
+    required String msg,
+    Toast length = Toast.LENGTH_SHORT,
+    ToastGravity gravity = ToastGravity.BOTTOM,
+    Color backgroundColor = Colors.black,
+    Color foregroundColor = Colors.white,
+  }) {
+    Fluttertoast.showToast(
+      msg: msg,
+      toastLength: length,
+      gravity: gravity,
+      backgroundColor: backgroundColor,
+      textColor: foregroundColor,
+
+    );
   }
 }
 

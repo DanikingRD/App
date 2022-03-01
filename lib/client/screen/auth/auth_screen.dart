@@ -2,7 +2,6 @@ import 'package:digital_card_app/client/screen/pages.dart';
 import 'package:digital_card_app/common/constants.dart';
 import 'package:digital_card_app/common/widget/forms.dart';
 import 'package:digital_card_app/server/auth_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -124,25 +123,12 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void signIn(String email, String password) async {
-    await _authService
-        .signIn(email: email, password: password)
-        .then((value) => {
-              Fluttertoast.showToast(
-                msg: 'Login Successful',
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM, // location
-                backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                textColor: Colors.black,
-              ),
-            })
-        .catchError((error) {
-      Fluttertoast.showToast(
-        msg: 'Invalid Credentials',
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM, // location
-        textColor: Colors.black,
-      );
-    });
+    await _authService.signIn(
+      email: email,
+      password: password,
+      signInCallback: () {
+        Get.toNamed(homePage.name);
+      }
+    );
   }
 }

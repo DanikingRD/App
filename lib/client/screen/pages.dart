@@ -54,8 +54,12 @@ final GetPage homePage = GetPage(
   page: () => const HomeScreen(),
 );
 
-final GetPage settingsListPage =
-    GetPage(name: '/settings_list', page: () => SettingsListScreen());
+final GetPage settingsListPage = GetPage(
+  name: '/settings_list',
+  page: () => SettingsListScreen(),
+  transition: Transition.leftToRight,
+  opaque: false,
+);
 
 List<GetPage<dynamic>> setupNavigation() {
   return [

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_card_app/client/screen/pages.dart';
+import 'package:digital_card_app/client/screen/user/settings_list.dart';
 import 'package:digital_card_app/common/constants.dart';
 import 'package:digital_card_app/common/model/user.dart';
 import 'package:digital_card_app/common/util/util.dart';

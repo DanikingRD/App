@@ -42,7 +42,7 @@ class WelcomeScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white),
                   child: const Text('GET STARTED',
-                      style: TextStyle(color: Colors.red, fontSize: 20)),
+                      style: TextStyle(color: homeColor, fontSize: 20)),
                 ),
               ),
               const SizedBox(height: 30),
@@ -52,7 +52,7 @@ class WelcomeScreen extends StatelessWidget {
                 },
                 child: const Text('LOG IN WITH EXISTING ACCOUNT',
                     style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold)),
+                        color: Colors.white, fontWeight: FontWeight.bold),),
               ),
             ],
           ),
