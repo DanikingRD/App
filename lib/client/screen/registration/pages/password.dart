@@ -3,11 +3,11 @@ import 'package:digital_card_app/client/screen/template/registration_template.da
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class PasswordPage extends StatelessWidget {
+class PasswordInputPage extends StatelessWidget {
   final GlobalKey<RegistrationFormTemplateState> formKey = GlobalKey();
   static const _requiredPasswordLength = 6;
 
-  PasswordPage({Key? key}) : super(key: key);
+  PasswordInputPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class PasswordPage extends StatelessWidget {
       header: 'Create a password',
       firstInputLabel: 'Enter a password',
       secondInputLabel: 'Verify your password',
-      nextPageId: '',
+      nextPageId: RegistrationScreen.loading,
       explanation: 'Your password must be at least 6 characters long.',
       hideFirstInputText: true,
       hideSecondInputText: true,

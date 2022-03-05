@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:digital_card_app/common/constants.dart';
 import 'package:digital_card_app/common/util/util.dart';
 import 'package:digital_card_app/common/widget/buttons.dart';
-import 'package:digital_card_app/common/widget/forms.dart';
 import 'package:flutter/material.dart';
 
 enum RegistrationFormData {
@@ -36,7 +35,7 @@ class RegistrationFormTemplate extends StatefulWidget {
   final TextEditingController firstInputController = TextEditingController();
   final TextEditingController secondInputController = TextEditingController();
   final GlobalKey<RegistrationFormTemplateState> state;
-  
+
   RegistrationFormTemplate({
     required this.state,
     required this.header,
@@ -71,21 +70,19 @@ class RegistrationFormTemplateState extends State<RegistrationFormTemplate> {
   @override
   Widget build(BuildContext context) {
     const edge = EdgeInsets.symmetric(horizontal: 32);
+    final primaryColor = Theme.of(context).primaryColor;
+    const margin = SizedBox(height: 30);
     var navigationButton = NavigationButton(
       onPressed: () {
         if (_validated) {
           widget.globalKey.currentState!.save();
+          Navigator.pushNamed(context, widget.nextPageId);
         }
-        // Get.toNamed(
-        //   widget.nextPageId,
-        //   arguments: form,
-        // );
       },
       dir: NavigationDir.next,
     );
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         leading: IconButton(
           splashRadius: appSplashRadius,
           onPressed: () {
@@ -95,7 +92,7 @@ class RegistrationFormTemplateState extends State<RegistrationFormTemplate> {
             Icons.navigate_before_sharp,
             size: 40,
           ),
-        )
+        ),
       ),
       body: SingleChildScrollView(
         reverse: true,
@@ -106,49 +103,63 @@ class RegistrationFormTemplateState extends State<RegistrationFormTemplate> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
-                Text(widget.header, style: const TextStyle(fontSize: 24)),
-                const SizedBox(height: 10),
-                widget.explanation != null
-                    ? Text(widget.explanation as String)
-                    : const SizedBox(),
-                const SizedBox(height: 5),
-                UnderlinedTextInput(
-                  autoFocusable: true,
+                margin,
+                Text(
+                  widget.header,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    color: Colors.black,
+                  ),
+                ),
+                margin,
+                if (widget.explanation != null) ...{
+                  Text(
+                    widget.explanation as String,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                },
+                _buildFormInput(
+                  labelText: widget.firstInputLabel,
+                  primaryColor: primaryColor,
+                  textInputAction: TextInputAction.next,
                   obscureText: widget.hideFirstInputText,
-                  label: widget.firstInputLabel,
-                  inputAction: TextInputAction.next,
                   validator: widget.firstValidator,
                   controller: widget.firstInputController,
                   keyboardType: widget.firstKeyboardType,
-                  onChanged: (data) => {
-                    widget.firstValidator == null
-                        ? enableNextButtonNonValidate()
-                        : validateInputs()
+                  onChanged: (data) {
+                    if (widget.firstValidator == null) {
+                      enableNextButtonNonValidate();
+                    } else {
+                      validateInputs();
+                    }
                   },
                   onSaved: (data) => RegistrationFormTemplateState.saveData(
                     widget.savedOnFirstInput,
                     data!,
                   ),
                 ),
-                UnderlinedTextInput(
-                  label: widget.secondInputLabel,
+                const SizedBox(height: 15),
+                _buildFormInput(
+                  labelText: widget.secondInputLabel,
+                  primaryColor: primaryColor,
+                  textInputAction: TextInputAction.done,
                   obscureText: widget.hideSecondInputText,
-                  inputAction: TextInputAction.done,
                   validator: widget.secondValidator,
                   controller: widget.secondInputController,
                   keyboardType: widget.secondKeyboardType,
-                  onChanged: (data) => {
-                    widget.secondValidator == null
-                        ? enableNextButtonNonValidate()
-                        : validateInputs()
+                  onChanged: (data) {
+                    if (widget.secondValidator != null) {
+                      enableNextButtonNonValidate();
+                    } else {
+                      validateInputs();
+                    }
                   },
                   onSaved: (data) => RegistrationFormTemplateState.saveData(
                     widget.savedOnSecondInput,
                     data!,
                   ),
                 ),
-                const SizedBox(height: 25),
+                margin,
                 Align(
                   alignment: Alignment.topRight,
                   child: widget.canHaveEmptyFields
@@ -162,6 +173,48 @@ class RegistrationFormTemplateState extends State<RegistrationFormTemplate> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildFormInput({
+    required labelText,
+    required primaryColor,
+    bool obscureText = false,
+    bool autofocus = false,
+    TextInputType? keyboardType,
+    TextInputAction? textInputAction,
+    TextEditingController? controller,
+    FormFieldValidator<String>? validator,
+    ValueChanged<String>? onChanged,
+    FormFieldSetter<String>? onSaved,
+  }) {
+    return TextFormField(
+      autofocus: autofocus,
+      keyboardType: keyboardType,
+      textInputAction: textInputAction,
+      controller: controller,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        labelText: labelText,
+        alignLabelWithHint: true,
+        floatingLabelStyle: TextStyle(color: primaryColor),
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color.fromRGBO(112, 112, 112, 1),
+            width: 2.0,
+          ),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: primaryColor,
+            width: 2.0,
+          ),
+        ),
+      ),
+      cursorColor: primaryColor,
+      validator: validator,
+      onChanged: onChanged,
+      onSaved: onSaved,
     );
   }
 

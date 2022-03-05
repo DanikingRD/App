@@ -21,7 +21,7 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
-   // Timer(const Duration(seconds: 1), attemptToRegister);
+  // Timer(const Duration(seconds: 1), attemptToRegister);
     super.initState();
   }
 
