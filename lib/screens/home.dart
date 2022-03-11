@@ -61,8 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: getIconColor(theme, 2)),
-            label: "test",
+            icon: Icon(Icons.person_outline_rounded, color: getIconColor(theme, 2)),
+            label: "  ",
             backgroundColor: Colors.white,
           ),
         ],
