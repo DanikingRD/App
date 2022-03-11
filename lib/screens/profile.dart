@@ -1,20 +1,40 @@
-import 'package:flutter/cupertino.dart';
+import 'package:digital_card_app/util.dart';
+import 'package:firebase_cloud_functions/cloud_services.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final String uid;
+  const ProfileScreen({Key? key, required this.uid}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
+   late Map<String, dynamic> userDetails;
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  void init() async {
+    try {
+      userDetails = await FirebaseCloudServices.database.findDataFor(widget.uid);
+      setState(() {
+        
+      });
+    } on Exception catch (e) {
+      Util.showSnackBar(context: context, content: e.toString());
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text("Username"),
+        title: Text(userDetails["email"]),
       ),
       body: ListView(
         children: [
@@ -25,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       backgroundColor: Colors.grey,
                       radius: 40,
                     ),

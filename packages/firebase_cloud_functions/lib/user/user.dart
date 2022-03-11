@@ -25,8 +25,11 @@ class FirestoreUser {
   });
 
 
-  factory FirestoreUser.fromDocumentSnapshot(DocumentSnapshot snapshot) {
-    final Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+  factory FirestoreUser.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    if (snapshot.data() == null) {
+      throw NullThrownError();
+    }
+    final Map<String, dynamic> data = snapshot.data()!;
     return FirestoreUser.fromJson(data);
   }
 
