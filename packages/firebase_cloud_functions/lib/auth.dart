@@ -100,12 +100,16 @@ class FirebaseAuthService {
         );
         // We've successfully uploaded the image to the storage
         // Now let's forward this to Firestore json
-        final FirestoreUser user = FirestoreUser(uid: uid, email: email, avatarURL: url);
-       await FirebaseCloudServices.database.users.doc(credentials.user!.uid).set(user.toJson());
-    }
+      final FirestoreUser user = FirestoreUser(uid: uid, email: email, avatarURL: url);
+      await FirebaseCloudServices.database.users.doc(credentials.user!.uid).set(user.toJson());
       return FirebaseAuthMessage.signedUp;
+    }
     } on FirebaseAuthException catch (exception) {
       print(exception.code);
+      switch (exception.code) {
+        case "email-already-in-use": 
+          return FirebaseAuthMessage.emailAlreadyInUse;
+      }
       return null;
     }
   }
@@ -124,6 +128,7 @@ class FirebaseAuthService {
 
 class FirebaseAuthMessage {
   FirebaseAuthMessage._();
+  // logging
   static const String loggedIn = "You've successfully logged in!";
   static const String emptyFields = "The email and password fields are required";
   static const String invalidEmail = "The email you've entered is invalid. Enter a valid email and try again.";
@@ -131,5 +136,7 @@ class FirebaseAuthMessage {
   static const String wrongPassword = "The password you've entered did not match our records. Please double-check and try again.";
   static const String tooManyRequests = "You've done too many requests. Wait a few seconds and try again.";
   static const String unknown = "Unfortunately, an unknown error occurred. Apologies for the inconvenience.";
+  //sign up
+  static const String emailAlreadyInUse = "The email you've entered is already in use";
   static const String signedUp = "You've signed up successfully!";
 }

@@ -1,6 +1,6 @@
 import 'package:digital_card_app/constants.dart';
 import 'package:digital_card_app/screens/home.dart';
-import 'package:digital_card_app/screens/sign_up.dart';
+import 'package:digital_card_app/screens/sign_up/sign_up.dart';
 import 'package:digital_card_app/util.dart';
 import 'package:digital_card_app/widgets/text_input.dart';
 import 'package:firebase_cloud_functions/auth.dart';
@@ -68,12 +68,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: const ShapeDecoration(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
-                        ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(4),
                       ),
-                      color: homeColor),
+                    ),
+                    color: homeColor,
+                  ),
                 ),
               ),
               const SizedBox(height: 12),
@@ -85,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    child: const Text("Not a member yet?"),
+                    child: const Text("Not a member yet? "),
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
                   GestureDetector(
@@ -116,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
       password: _password.text,
       unknown: "Unfortunately, an unknown error occurred. Apologies for the inconvenience. Try again later or contact us at tapea.do so we can look into this error further.",
     );
-    
+
     if (output == FirebaseAuthMessage.loggedIn) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => const HomeScreen()));

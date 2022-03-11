@@ -1,14 +1,11 @@
 import 'package:digital_card_app/handler/auth_handler.dart';
 import 'package:digital_card_app/provider/user_provider.dart';
 import 'package:digital_card_app/screens/login.dart';
-import 'package:firebase_cloud_functions/auth.dart';
 import 'package:firebase_cloud_functions/cloud_services.dart';
-import 'package:firebase_cloud_functions/user/user.dart';
 import 'package:firebase_cloud_functions/entry_point.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:digital_card_app/constants.dart';
-import 'package:digital_card_app/routes.dart';
 
 Future<void> main(List<String> args) async {
   await FirebaseCloudFunctions.init();
@@ -53,7 +50,6 @@ class Main extends StatelessWidget {
             return const LoginScreen();
           },
         ),
-        onGenerateRoute: RouteGenerator.generate,
       ),
     );
   }
