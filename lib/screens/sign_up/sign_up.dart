@@ -1,7 +1,6 @@
-import 'package:digital_card_app/screens/sign_up/create_profile.dart';
+import 'package:digital_card_app/screens/router.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_card_app/constants.dart';
-import 'package:digital_card_app/screens/login.dart';
 import 'package:digital_card_app/widgets/text_input.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -37,6 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
               "Create an account",
@@ -97,18 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onPressed: () {
                   if (form.currentState!.validate()) {
                     form.currentState!.save();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => CreateProfile(
-                          account: {
-                            "Username": _username.text,
-                            "Email": _email.text,
-                            "Password": _password.text,
-                          },
-                        ),
-                      ),
-                    );
+                    openCreateProfileScreen();
                   }
                 },
                 backgroundColor: homeColor,
@@ -154,6 +143,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (text!.isEmpty) {
       return "The field is required";
     }
+    if (index == 0 && text.length < 4) {
+      return "The username must be at last 4 characters long";
+    }
     if (index == 2 && text.length < 6) {
       return "The password must be at least 6 characters long";
     }
@@ -163,10 +155,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return null;
   }
 
+  void openCreateProfileScreen() {
+    Navigator.pushNamed(context, AppRouter.createProfilePage, arguments: {
+      "Username": _username.text,
+      "Email": _email.text,
+      "Password": _password.text,
+    });
+  }
+
   void openLoginScreen() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const LoginScreen()),
-    );
+    Navigator.pushReplacementNamed(context, AppRouter.loginPage);
   }
 }

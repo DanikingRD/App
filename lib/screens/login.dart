@@ -1,6 +1,6 @@
 import 'package:digital_card_app/constants.dart';
 import 'package:digital_card_app/screens/home.dart';
-import 'package:digital_card_app/screens/sign_up/sign_up.dart';
+import 'package:digital_card_app/screens/router.dart';
 import 'package:digital_card_app/util.dart';
 import 'package:digital_card_app/widgets/text_input.dart';
 import 'package:firebase_cloud_functions/auth.dart';
@@ -115,12 +115,17 @@ class _LoginScreenState extends State<LoginScreen> {
     final String output = await FirebaseCloudServices.authService.signIn(
       email: _email.text,
       password: _password.text,
-      unknown: "Unfortunately, an unknown error occurred. Apologies for the inconvenience. Try again later or contact us at tapea.do so we can look into this error further.",
+      unknown:
+          "Unfortunately, an unknown error occurred. Apologies for the inconvenience. Try again later or contact us at tapea.do so we can look into this error further.",
     );
 
     if (output == FirebaseAuthMessage.loggedIn) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+        context,
+        MaterialPageRoute(
+          builder: (_) => const HomeScreen(),
+        ),
+      );
     }
 
     Util.showSnackBar(context: context, content: output, seconds: 2);
@@ -131,9 +136,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void openSignUpScreen() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const SignUpScreen()),
-    );
+    Navigator.pushNamed(context, AppRouter.signUpPage);
   }
 }

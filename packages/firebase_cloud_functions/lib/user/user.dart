@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// Defines a [FirebaseUser].
@@ -11,6 +9,7 @@ class FirebaseUser {
 
   const FirebaseUser({required this.uid, required this.email});
 }
+
 // Defines a [FirestoreUser].
 // Contains all the properties of the user's document in the Firestore database
 class FirestoreUser {
@@ -26,11 +25,9 @@ class FirestoreUser {
     required this.avatarURL,
   });
 
-
-  factory FirestoreUser.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    if (snapshot.data() == null) {
-      throw NullThrownError();
-    }
+  factory FirestoreUser.fromDocumentSnapshot(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+  ) {
     final Map<String, dynamic> data = snapshot.data()!;
     return FirestoreUser.fromJson(data);
   }
@@ -45,11 +42,9 @@ class FirestoreUser {
   }
 
   Map<String, dynamic> toJson() => {
-    "uid": uid,
-    "username": username,
-    "email": email,
-    "avatarURL": avatarURL,
-  };
-
-  
+        "uid": uid,
+        "username": username,
+        "email": email,
+        "avatarURL": avatarURL,
+      };
 }

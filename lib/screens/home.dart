@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_card_app/screens/create_card.dart';
 import 'package:digital_card_app/screens/screens.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -34,11 +32,19 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: theme.primaryColorDark,
         titleSpacing: 16.0,
-        title: SafeArea(child: Image.asset("assets/image/tapea.png", height: 48)),
+        title:
+            SafeArea(child: Image.asset("assets/image/tapea.png", height: 48)),
         actions: [
-          IconButton(onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) => CreateCardScreen()));
-          }, icon: const Icon(Icons.add_box_outlined)),
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const CreateCardScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.add_box_outlined)),
         ],
       ),
       body: PageView(
@@ -61,7 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline_rounded, color: getIconColor(theme, 2)),
+            icon: Icon(Icons.person_outline_rounded,
+                color: getIconColor(theme, 2)),
             label: "  ",
             backgroundColor: Colors.white,
           ),

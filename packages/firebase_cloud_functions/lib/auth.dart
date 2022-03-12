@@ -1,10 +1,8 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_cloud_functions/cloud_services.dart';
 import 'package:firebase_cloud_functions/user/user.dart';
-import 'package:flutter/services.dart';
 
 // A wrapper service over FirebaseAuth
 class FirebaseAuthService {
@@ -13,18 +11,14 @@ class FirebaseAuthService {
 
   /// Signs out the current user.
   ///
-  /// If successful, it also updates [authListener] stream
+  /// If successful, it also updates [authStateChanges] stream
   Future<void> signOut() async {
-    try {
-      await _auth.signOut();
-    } on FirebaseAuthException catch (exception) {
-      print(exception.message);
-    }
+    await FirebaseAuth.instance.signOut();
   }
 
   /// Attempts to sign in a user with the given email address and password.
   ///
-  /// If successful, it also updates [authListener] stream
+  /// If successful, it also updates [authStateChanges] stream
   ///
   /// **Important**: You must enable Email & Password accounts in the Auth
   /// section of the Firebase console before being able to use them.
@@ -37,10 +31,7 @@ class FirebaseAuthService {
     String? unknown,
   }) async {
     try {
-      final credentials = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
       return "You've successfully logged in!";
     } on FirebaseAuthException catch (exception) {
       if (email.isEmpty || password.isEmpty) {
@@ -48,16 +39,16 @@ class FirebaseAuthService {
       }
       switch (exception.code) {
         case "invalid-email":
-          return "The email you've entered is invalid. Enter a valid email and try again.";
+          return FirebaseAuthMessage.invalidEmail;
         case "user-not-found":
-          return "The email you've entered did not match our records. Please double-check or try creating a new account.";
+          return FirebaseAuthMessage.emailNotFound;
         case "wrong-password":
-          return "The password you've entered did not match our records. Please double-check and try again.";
+          return FirebaseAuthMessage.wrongPassword;
         case "too-many-requests":
-          return "You've done too many requests. Wait a few seconds and try again.";
+          return FirebaseAuthMessage.wrongPassword;
       }
       if (unknown == null) {
-        return "Unfortunately, an unknown error occurred. Apologies for the inconvenience.";
+        return FirebaseAuthMessage.unknown;
       } else {
         return unknown;
       }
@@ -101,7 +92,7 @@ class FirebaseAuthService {
         } else {
           url = null;
         }
-        // Upload to Firestore 
+        // Upload to Firestore
         final FirestoreUser user = FirestoreUser(
           uid: uid,
           username: username,
@@ -114,18 +105,20 @@ class FirebaseAuthService {
         return FirebaseAuthMessage.signedUp;
       }
     } on FirebaseAuthException catch (exception) {
-      print(exception.code);
       switch (exception.code) {
         case "email-already-in-use":
           return FirebaseAuthMessage.emailAlreadyInUse;
+        case "invalid-email":
+          return FirebaseAuthMessage.invalidEmail;
+        default:
+          return FirebaseAuthMessage.unknown;
       }
-      return null;
     }
   }
 
   /// Notifies about changes to the user's sign-in state such as
   /// sign-in or sign-out, returning a [FirebaseUser] which could ben
-  Stream<FirebaseUser?> authListener() {
+  Stream<FirebaseUser?> authStateChanges() {
     return _auth.authStateChanges().map((event) {
       return event != null
           ? FirebaseUser(uid: event.uid, email: event.email!)

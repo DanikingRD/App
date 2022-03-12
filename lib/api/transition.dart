@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class TransitionAPI {}
 
@@ -39,28 +40,31 @@ class Transition extends PageRouteBuilder {
   final TransitionEffect transitionEffect;
 
   /// The widget below this widget in the tree
-  final Widget child;
 
   /// An parametric animation easing curve, i.e. a mapping of the unit interval to the unit interval.
   ///
   /// Default to [Curves.ease]
   final Curve curve;
+
+  final WidgetBuilder builder;
   Transition({
-    required this.child,
+    required this.builder,
     this.transitionEffect = TransitionEffect.FADE,
     this.curve = Curves.ease,
     RouteSettings? settings,
     Object? arguments,
   }) : super(
           /// Called to obtain the child widget.
-          pageBuilder: (BuildContext context, animation, _) => child,
+          pageBuilder: (BuildContext context, animation, _) => builder(context),
           settings: settings,
           transitionsBuilder: (BuildContext context, animation, _, __) {
             switch (transitionEffect) {
               case TransitionEffect.FADE:
-                return FadeTransition(opacity: animation, child: child);
+                return FadeTransition(
+                    opacity: animation, child: builder(context));
               case TransitionEffect.SCALE:
-                return ScaleTransition(scale: animation, child: child);
+                return ScaleTransition(
+                    scale: animation, child: builder(context));
               default:
                 final tween =
                     Tween(begin: transitionEffect.value, end: Offset.zero)
@@ -68,7 +72,7 @@ class Transition extends PageRouteBuilder {
                 return SlideTransition(
                   transformHitTests: false,
                   position: animation.drive(tween),
-                  child: child,
+                  child: builder(context),
                 );
             }
           },

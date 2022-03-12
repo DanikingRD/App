@@ -1,7 +1,9 @@
+import 'package:digital_card_app/screens/router.dart';
 import 'package:digital_card_app/util.dart';
+import 'package:firebase_cloud_functions/auth.dart';
 import 'package:firebase_cloud_functions/cloud_services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String uid;
@@ -12,10 +14,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  Map<String, dynamic> account = {};
-  late ImageProvider avatar;
+  late final Map<String, dynamic> account;
+  late final ImageProvider<Object> avatar;
 
   bool _loading = false;
+
   @override
   void initState() {
     super.initState();
@@ -27,9 +30,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _loading = true;
     });
     try {
-      account = await FirebaseCloudServices.database.findAccountData(widget.uid);
-      avatar = await getProfileAvatar();
-      setState(() {});
+      account =
+          await FirebaseCloudServices.database.findAccountData(widget.uid);
+      avatar = await getAvatar();
     } on Exception catch (e) {
       Util.showSnackBar(context: context, content: e.toString());
     }
@@ -44,81 +47,73 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ? const Center(
             child: CircularProgressIndicator(),
           )
-        : Scaffold(
-            
-            body: ListView(
+        : profile(context);
+  }
+
+  Widget profile(BuildContext context) {
+    return Scaffold(
+      body: Align(
+        alignment: Alignment.topCenter,
+        child: Column(
+          children: [
+            Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: avatar,
-                            backgroundColor: Colors.grey,
-                            radius: 40,
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    renderStat(0, "Cards"),
-                                    renderStat(0, "Contacts")
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      )
-                    ],
+                profileAvatar(),
+                Positioned(
+                  bottom: -12,
+                  right: -8,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.edit),
                   ),
                 ),
               ],
             ),
-          );
+            const SizedBox(
+              height: 24,
+            ),
+            buildCredentials(
+              username: account["username"],
+              email: account["email"],
+            ),
+            TextButton(
+                onPressed: () async {
+                  await FirebaseCloudServices.authService.signOut();
+                  Navigator.pushReplacementNamed(context, AppRouter.loginPage);
+                },
+                child: const Text("DISCONNECT"))
+          ],
+        ),
+      ),
+    );
   }
 
-  Future<ImageProvider<Object>> getProfileAvatar() async {
+  Widget buildCredentials({required String username, required String email}) {
+    return Column(
+      children: [
+        Text(
+          username,
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+        Text(
+          email,
+          style: const TextStyle(color: Colors.grey),
+        ),
+      ],
+    );
+  }
+
+  Widget profileAvatar() {
+    return CircleAvatar(
+      backgroundImage: avatar,
+      radius: 64,
+    );
+  }
+
+  Future<ImageProvider<Object>> getAvatar() async {
     if (account["avatarURL"] == null) {
       return Image.asset("assets/image/default_avatar.jpg").image;
     }
     return NetworkImage(account["avatarURL"]);
-  }
-
-  Widget renderStat(int number, String label) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            number.toString(),
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 4),
-            child: Text(
-              label,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.grey,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
   }
 }
