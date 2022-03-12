@@ -45,10 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: CircularProgressIndicator(),
           )
         : Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.black,
-              title: Text(account["username"]),
-            ),
+            
             body: ListView(
               children: [
                 Padding(
