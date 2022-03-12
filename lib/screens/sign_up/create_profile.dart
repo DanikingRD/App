@@ -9,6 +9,7 @@ import 'package:firebase_cloud_functions/cloud_services.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'dart:async';
 class CreateProfile extends StatefulWidget {
   final Map<String, String> account;
   const CreateProfile({Key? key, required this.account}) : super(key: key);
@@ -20,7 +21,7 @@ class CreateProfile extends StatefulWidget {
 class _CreateProfileState extends State<CreateProfile> {
   final TextEditingController _firstName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
-  Uint8List? _image;
+  Uint8List? _selectedImage;
   bool _loading = false;
 
   @override
@@ -68,7 +69,7 @@ class _CreateProfileState extends State<CreateProfile> {
             const SizedBox(
               height: 48,
             ),
-            TextInput(
+            TextFormInput(
               controller: _firstName,
               hintText: "First Name",
               textInputType: TextInputType.name,
@@ -76,7 +77,7 @@ class _CreateProfileState extends State<CreateProfile> {
             const SizedBox(
               height: 24,
             ),
-            TextInput(
+            TextFormInput(
               controller: _lastName,
               hintText: "Last Name",
               textInputType: TextInputType.name,
@@ -117,11 +118,11 @@ class _CreateProfileState extends State<CreateProfile> {
     setState(() {
       _loading = true;
     });
-    final String output = await FirebaseCloudServices.authService.  signUp(
+    final String output = await FirebaseCloudServices.authService.signUp(
       username: widget.account["Username"]!,
       email: widget.account["Email"]!,
       password: widget.account["Password"]!,
-      file: _image,
+      image: _selectedImage,
     ).onError((error, stackTrace) {
       setState(() {
         _loading = false;
@@ -133,21 +134,21 @@ class _CreateProfileState extends State<CreateProfile> {
     });
     if (output == FirebaseAuthMessage.signedUp) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-    } 
+    }
   }
 
   void pickImage() async {
-    final Uint8List? img = await Util.pickImage(ImageSource.camera);
-    if (img != null) {
-      setState(() => _image = img);
+    final Uint8List? data = await Util.pickImage(ImageSource.camera);
+    if (data!= null) {
+      setState(() => _selectedImage = data);
     }
   }
 
   ImageProvider<Object> getAvatar() {
-    if (_image == null) {
+    if (_selectedImage == null) {
       return const AssetImage("assets/image/default_avatar.jpg");
     } else {
-      return MemoryImage(_image!);
+      return MemoryImage(_selectedImage!);
     }
   }
 }

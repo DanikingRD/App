@@ -15,11 +15,13 @@ class FirebaseUser {
 // Contains all the properties of the user's document in the Firestore database
 class FirestoreUser {
   final String uid;
+  final String username;
   final String email;
-  final String avatarURL;
+  final String? avatarURL;
 
   const FirestoreUser({
     required this.uid,
+    required this.username,
     required this.email,
     required this.avatarURL,
   });
@@ -36,6 +38,7 @@ class FirestoreUser {
   factory FirestoreUser.fromJson(Map<String, dynamic> json) {
     return FirestoreUser(
       uid: json["uid"],
+      username: json["username"],
       email: "email",
       avatarURL: "avatarURL",
     );
@@ -43,6 +46,7 @@ class FirestoreUser {
 
   Map<String, dynamic> toJson() => {
     "uid": uid,
+    "username": username,
     "email": email,
     "avatarURL": avatarURL,
   };

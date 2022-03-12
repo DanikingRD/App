@@ -1,15 +1,13 @@
+import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_cloud_functions/cloud_services.dart';
-import 'package:firebase_cloud_functions/storage.dart';
 import 'package:firebase_cloud_functions/user/user.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 // A wrapper service over FirebaseAuth
 class FirebaseAuthService {
-
   final FirebaseAuth _auth;
   const FirebaseAuthService(this._auth);
 
@@ -83,7 +81,7 @@ class FirebaseAuthService {
     required String email,
     required String password,
     required String username,
-    Uint8List? file,
+    Uint8List? image,
   }) async {
     try {
       final credentials = await _auth.createUserWithEmailAndPassword(
@@ -93,21 +91,32 @@ class FirebaseAuthService {
       if (credentials.user != null) {
         // We've successfully logged in
         final String uid = credentials.user!.uid;
-        final String url = await FirebaseCloudServices.storageService.uploadImage(
-          childName: "avatars",
+        final String? url;
+        if (image != null) {
+          url = await FirebaseCloudServices.storageService.uploadImage(
+            childName: "avatars",
+            uid: uid,
+            file: image,
+          );
+        } else {
+          url = null;
+        }
+        // Upload to Firestore 
+        final FirestoreUser user = FirestoreUser(
           uid: uid,
-          file: file ?? Uint8List(0),
+          username: username,
+          email: email,
+          avatarURL: url,
         );
-        // We've successfully uploaded the image to the storage
-        // Now let's forward this to Firestore json
-      final FirestoreUser user = FirestoreUser(uid: uid, email: email, avatarURL: url);
-      await FirebaseCloudServices.database.users.doc(credentials.user!.uid).set(user.toJson());
-      return FirebaseAuthMessage.signedUp;
-    }
+        await FirebaseCloudServices.database.users
+            .doc(credentials.user!.uid)
+            .set(user.toJson());
+        return FirebaseAuthMessage.signedUp;
+      }
     } on FirebaseAuthException catch (exception) {
       print(exception.code);
       switch (exception.code) {
-        case "email-already-in-use": 
+        case "email-already-in-use":
           return FirebaseAuthMessage.emailAlreadyInUse;
       }
       return null;
@@ -118,9 +127,12 @@ class FirebaseAuthService {
   /// sign-in or sign-out, returning a [FirebaseUser] which could ben
   Stream<FirebaseUser?> authListener() {
     return _auth.authStateChanges().map((event) {
-      return event != null ?  FirebaseUser(uid: event.uid, email: event.email!) : null;
+      return event != null
+          ? FirebaseUser(uid: event.uid, email: event.email!)
+          : null;
     });
   }
+
   String findUserID() {
     return _auth.currentUser!.uid;
   }
@@ -130,13 +142,20 @@ class FirebaseAuthMessage {
   FirebaseAuthMessage._();
   // logging
   static const String loggedIn = "You've successfully logged in!";
-  static const String emptyFields = "The email and password fields are required";
-  static const String invalidEmail = "The email you've entered is invalid. Enter a valid email and try again.";
-  static const String emailNotFound = "The email you've entered did not match our records. Please double-check or try creating a new account.";
-  static const String wrongPassword = "The password you've entered did not match our records. Please double-check and try again.";
-  static const String tooManyRequests = "You've done too many requests. Wait a few seconds and try again.";
-  static const String unknown = "Unfortunately, an unknown error occurred. Apologies for the inconvenience.";
+  static const String emptyFields =
+      "The email and password fields are required";
+  static const String invalidEmail =
+      "The email you've entered is invalid. Enter a valid email and try again.";
+  static const String emailNotFound =
+      "The email you've entered did not match our records. Please double-check or try creating a new account.";
+  static const String wrongPassword =
+      "The password you've entered did not match our records. Please double-check and try again.";
+  static const String tooManyRequests =
+      "You've done too many requests. Wait a few seconds and try again.";
+  static const String unknown =
+      "Unfortunately, an unknown error occurred. Apologies for the inconvenience.";
   //sign up
-  static const String emailAlreadyInUse = "The email you've entered is already in use";
+  static const String emailAlreadyInUse =
+      "The email you've entered is already in use";
   static const String signedUp = "You've signed up successfully!";
 }

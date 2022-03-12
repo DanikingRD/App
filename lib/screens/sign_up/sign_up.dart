@@ -51,21 +51,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextInput(
+                  TextFormInput(
                     controller: _username,
                     hintText: 'Enter your username',
                     textInputType: TextInputType.text,
                     validator: (text) => validate(text, 0),
                   ),
                   const SizedBox(height: 24),
-                  TextInput(
+                  TextFormInput(
                     hintText: 'Enter your email',
                     controller: _email,
                     textInputType: TextInputType.emailAddress,
                     validator: (text) => validate(text, 1),
                   ),
                   const SizedBox(height: 24),
-                  TextInput(
+                  TextFormInput(
                     controller: _password,
                     hintText: 'Enter your password',
                     textInputType: TextInputType.text,
@@ -73,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     validator: (text) => validate(text, 2),
                   ),
                   const SizedBox(height: 24),
-                  TextInput(
+                  TextFormInput(
                     controller: _verifyPassword,
                     hintText: 'Verify your password',
                     textInputType: TextInputType.text,

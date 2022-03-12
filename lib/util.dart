@@ -1,3 +1,5 @@
+
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:digital_card_app/constants.dart';
@@ -7,15 +9,16 @@ import 'package:image_picker/image_picker.dart';
 class Util {
   Util._(); // Utility class not meant to be instantiated or extended
 
-  static Future<Uint8List?> pickImage(ImageSource src) async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? file = await picker.pickImage(source: src);
-    if (file != null) {
-      return await file.readAsBytes();
-    } else {
-      return null;
-    }
+// For picking up images
+static Future<Uint8List?> pickImage(ImageSource source) async {
+  final ImagePicker _imagePicker = ImagePicker();
+  XFile? _file = await _imagePicker.pickImage(source: source);
+  if (_file != null) {
+    return await _file.readAsBytes();
   }
+  return null;
+}
+
 
   static showSnackBar({
     required final BuildContext context,

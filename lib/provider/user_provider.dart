@@ -8,7 +8,7 @@ class UserProvider with ChangeNotifier {
  FirestoreUser? get listener => _user;
 
   Future<void> init() async {
-    _user = await FirebaseCloudServices.database.getSignedInUser();
+    _user = await FirebaseCloudServices.database.getUserModel(FirebaseCloudServices.authService.findUserID());
     notifyListeners();
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,14 +9,19 @@ class FirebaseStorageService {
 
   FirebaseStorageService(this._storage);
 
-  Future uploadImage({
+  Future<String?> uploadImage({
     required String childName,
     required uid,
     required Uint8List file,
-  }) async {
-    final Reference ref = _storage.ref().child(childName).child(uid);
-    final UploadTask task = ref.putData(file);
-    final TaskSnapshot snapshot = await task;
-    return await snapshot.ref.getDownloadURL();
+  })  async {
+    try {
+      final Reference ref = _storage.ref().child(childName).child(uid);
+      final UploadTask task = ref.putData(file);
+      final snapshot = await task;
+      return snapshot.ref.getDownloadURL();
+    } on FirebaseException catch (exception) {
+      print(file.toString());
+      return null;
+    }
   }
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class TextInput extends StatelessWidget {
+class TextFormInput extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final TextInputType textInputType;
   final bool password;
   final FormFieldValidator<String>? validator;
-  const TextInput({
+  const TextFormInput({
     Key? key,
     required this.controller,
     required this.hintText,
