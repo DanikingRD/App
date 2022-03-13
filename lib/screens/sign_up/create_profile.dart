@@ -1,15 +1,14 @@
 import 'dart:typed_data';
 
 import 'package:digital_card_app/constants.dart';
-import 'package:digital_card_app/screens/home.dart';
+import 'package:digital_card_app/model/settings.dart';
+import 'package:digital_card_app/model/user.dart';
+import 'package:digital_card_app/screens/router.dart';
 import 'package:digital_card_app/util.dart';
 import 'package:digital_card_app/widgets/text_input.dart';
-import 'package:firebase_cloud_functions/auth.dart';
-import 'package:firebase_cloud_functions/cloud_services.dart';
+import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'dart:async';
 
 class CreateProfile extends StatefulWidget {
   final Map<String, String> account;
@@ -26,11 +25,6 @@ class _CreateProfileState extends State<CreateProfile> {
   final GlobalKey<FormState> form = GlobalKey();
   Uint8List? _selectedImage;
   bool _loading = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -53,6 +47,9 @@ class _CreateProfileState extends State<CreateProfile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(
+                height: 10,
+              ),
               const Text(
                 "Create a Profile",
                 style: TextStyle(fontSize: 24),
@@ -136,30 +133,57 @@ class _CreateProfileState extends State<CreateProfile> {
     setState(() {
       _loading = true;
     });
-    final String output = await FirebaseCloudServices.authService
-        .signUp(
-      username: widget.account["Username"]!,
-      email: widget.account["Email"]!,
-      password: widget.account["Password"]!,
-      image: _selectedImage,
-    )
-        .onError((error, stackTrace) {
-      setState(() {
-        _loading = false;
-      });
-    });
-    Util.showSnackBar(context: context, content: output, seconds: 2);
+    final String email = widget.account["Email"]!;
+    final String password = widget.account["Password"]!;
+    await FirebaseAuthAPI.register(
+      context: context,
+      email: email,
+      password: password,
+      onError: (String message) {
+        Util.showSnackBar(
+          context: context,
+          content: message,
+        );
+      },
+      onSuccess: (User? user) async {
+        final String uid = user!.uid;
+        String? imageURL;
+        if (_selectedImage != null) {
+          // We selected a profile image
+          imageURL = await FirebaseStorageService.instance.uploadImage(
+            childName: "avatars",
+            uid: uid,
+            file: _selectedImage!,
+          );
+        }
+        final TapeaUser newUser = TapeaUser(
+          uid: uid,
+          username: widget.account["Username"]!,
+          email: email,
+          avatarURL: imageURL,
+        );
+        FirestoreCollection("users").setJson(
+          path: newUser.uid,
+          json: newUser.toJson(),
+        );
+        final UserSettings settings = UserSettings(
+          uid: uid,
+          theme: "system",
+        );
+        FirestoreCollection("settings").setJson(
+          path: uid,
+          json: settings.toJson(),
+        );
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRouter.homePage,
+          (_) => false,
+        );
+      },
+    );
     setState(() {
       _loading = false;
     });
-    if (output == FirebaseAuthMessage.signedUp) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
-        ),
-      );
-    }
   }
 
   void pickImage() async {

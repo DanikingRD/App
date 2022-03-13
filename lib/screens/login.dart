@@ -1,10 +1,9 @@
 import 'package:digital_card_app/constants.dart';
-import 'package:digital_card_app/screens/home.dart';
+import 'package:digital_card_app/screens/home/home.dart';
 import 'package:digital_card_app/screens/router.dart';
 import 'package:digital_card_app/util.dart';
 import 'package:digital_card_app/widgets/text_input.dart';
-import 'package:firebase_cloud_functions/auth.dart';
-import 'package:firebase_cloud_functions/cloud_services.dart';
+import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -112,27 +111,22 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _loading = true;
     });
-    final String output = await FirebaseCloudServices.authService.signIn(
+    await FirebaseAuthAPI.signIn(
+      context: context,
       email: _email.text,
       password: _password.text,
-      unknown:
-          "Unfortunately, an unknown error occurred. Apologies for the inconvenience. Try again later or contact us at tapea.do so we can look into this error further.",
+      onError: (message) {
+        Util.showSnackBar(context: context, content: message);
+      },
+      onSuccess: (user) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRouter.homePage,
+          (_) => false,
+        );
+      },
     );
-
-    if (output == FirebaseAuthMessage.loggedIn) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
-        ),
-      );
-    }
-
-    Util.showSnackBar(context: context, content: output, seconds: 2);
-
-    setState(() {
-      _loading = false;
-    });
+    setState(() => _loading = false);
   }
 
   void openSignUpScreen() {

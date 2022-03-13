@@ -1,19 +1,16 @@
 import 'package:digital_card_app/screens/router.dart';
-import 'package:digital_card_app/util.dart';
-import 'package:firebase_cloud_functions/auth.dart';
-import 'package:firebase_cloud_functions/cloud_services.dart';
+import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatefulWidget {
+class Profile extends StatefulWidget {
   final String uid;
-  const ProfileScreen({Key? key, required this.uid}) : super(key: key);
+  const Profile({Key? key, required this.uid}) : super(key: key);
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileState extends State<Profile> {
   late final Map<String, dynamic> account;
   late final ImageProvider<Object> avatar;
 
@@ -29,13 +26,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       _loading = true;
     });
-    try {
-      account =
-          await FirebaseCloudServices.database.findAccountData(widget.uid);
-      avatar = await getAvatar();
-    } on Exception catch (e) {
-      Util.showSnackBar(context: context, content: e.toString());
-    }
+    final json = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(widget.uid)
+        .get();
+
+    account = json.data()!;
     setState(() {
       _loading = false;
     });
@@ -78,8 +74,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             TextButton(
                 onPressed: () async {
-                  await FirebaseCloudServices.authService.signOut();
-                  Navigator.pushReplacementNamed(context, AppRouter.loginPage);
+                  await FirebaseAuthAPI.logout(context);
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    AppRouter.loginPage,
+                    (route) => false,
+                  );
                 },
                 child: const Text("DISCONNECT"))
           ],
@@ -105,12 +105,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget profileAvatar() {
     return CircleAvatar(
-      backgroundImage: avatar,
+      backgroundImage: getAvatar(),
       radius: 64,
     );
   }
 
-  Future<ImageProvider<Object>> getAvatar() async {
+  ImageProvider<Object> getAvatar() {
     if (account["avatarURL"] == null) {
       return Image.asset("assets/image/default_avatar.jpg").image;
     }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-const backgroundColor = Color.fromRGBO(0, 0, 0, 1);
 const homeColor = Color.fromARGB(255, 255, 66, 66);
 const lockedFloatingButtonColor = Color.fromARGB(255, 255, 133, 133);
 const appGradient = LinearGradient(
