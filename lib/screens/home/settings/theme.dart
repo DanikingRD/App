@@ -56,17 +56,8 @@ class _ThemeSettingsScreenState extends State<ThemeSettingsScreen> {
     // Fast return to avoid unnecessary rebuilds
     // if we are not switching the mode.
 
-    // We're on light mode
-    if (_activeBox == 0) {
-      if (index == 0) {
-        return;
-      }
-    }
-    // We're on dark mode
-    if (_activeBox == 1 || _activeBox == 2) {
-      if (index != 0) {
-        return;
-      }
+    if (_activeBox == index) {
+      return;
     }
     setState(() {
       options[_activeBox].value = false;
