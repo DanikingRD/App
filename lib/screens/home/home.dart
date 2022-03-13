@@ -1,3 +1,5 @@
+import 'package:digital_card_app/constants.dart';
+import 'package:digital_card_app/provider/theme.dart';
 import 'package:digital_card_app/screens/create_card.dart';
 import 'package:digital_card_app/screens/home/contacts.dart';
 import 'package:digital_card_app/screens/home/profile.dart';
@@ -36,10 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: theme.primaryColorDark,
-        titleSpacing: 16.0,
-        title:
-            SafeArea(child: Image.asset("assets/image/tapea.png", height: 48)),
+        backgroundColor: theme.scaffoldBackgroundColor,
+        title: SafeArea(
+          child: Image.asset(
+            "assets/image/tapea.png",
+            height: 48,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -65,49 +70,80 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: pageController,
         onPageChanged: onPageChanged,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        onTap: onItemTapped,
-        backgroundColor: theme.primaryColorDark,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.contacts_sharp,
-              color: getIconColor(theme, 0),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: getColorbyTheme(),
+              blurRadius: 1.4,
+              offset: const Offset(
+                0.0,
+                1.0,
+              ),
+            )
+          ],
+        ),
+        child: BottomNavigationBar(
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          onTap: onItemTapped,
+          items: [
+            BottomNavigationBarItem(
+              icon: getIcon(0),
+              label: "",
             ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.quick_contacts_mail,
-              color: getIconColor(theme, 1),
+            BottomNavigationBarItem(
+              icon: getIcon(1),
+              label: "",
             ),
-            label: "",
-            backgroundColor: Colors.white,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_outline_rounded,
-              color: getIconColor(theme, 2),
+            BottomNavigationBarItem(
+              icon: getIcon(2),
+              label: "",
             ),
-            label: "",
-            backgroundColor: Colors.white,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.settings,
-              color: getIconColor(theme, 3),
-            ),
-            label: '',
-          )
-        ],
+            BottomNavigationBarItem(
+              icon: getIcon(3),
+              label: "",
+            )
+          ],
+        ),
       ),
     );
   }
 
-  Color getIconColor(ThemeData data, int page) {
-    return page == _page ? Colors.white : data.primaryColorLight;
+  Icon getIcon(int page) {
+    if (page == 0) {
+      if (_page == page) {
+        return Icon(Icons.contacts, color: getColorbyTheme());
+      }
+      return Icon(Icons.contacts_outlined, color: getColorbyTheme());
+    }
+    if (page == 1) {
+      if (_page == page) {
+        return Icon(Icons.contact_mail, color: getColorbyTheme());
+      }
+      return Icon(Icons.contact_mail_outlined, color: getColorbyTheme());
+    }
+    if (page == 2) {
+      if (_page == page) {
+        return Icon(Icons.person, color: getColorbyTheme());
+      }
+      return Icon(Icons.person_outlined, color: getColorbyTheme());
+    }
+    if (page == 3) {
+      if (_page == page) {
+        return Icon(Icons.settings, color: getColorbyTheme());
+      }
+      return Icon(Icons.settings_outlined, color: getColorbyTheme());
+    }
+    throw ("Invalid page");
+  }
+
+  Color getColorbyTheme() {
+    final ThemeProvider provider = Provider.of(context);
+    if (provider.isDarkMode) {
+      return Colors.white;
+    }
+    return Colors.black;
   }
 
   void onItemTapped(int page) {

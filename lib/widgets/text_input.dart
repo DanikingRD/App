@@ -1,3 +1,4 @@
+import 'package:digital_card_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class TextFormInput extends StatelessWidget {
@@ -25,6 +26,7 @@ class TextFormInput extends StatelessWidget {
       keyboardType: textInputType,
       obscureText: password,
       validator: validator,
+      cursorColor: logoRedColor,
       decoration: InputDecoration(
         hintText: hintText,
         border: border,

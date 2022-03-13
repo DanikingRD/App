@@ -38,7 +38,7 @@ class _CreateProfileState extends State<CreateProfile> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -118,7 +118,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         Radius.circular(4),
                       ),
                     ),
-                    color: homeColor,
+                    color: logoRedColor,
                   ),
                 ),
               ),

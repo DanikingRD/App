@@ -1,5 +1,6 @@
 import 'package:digital_card_app/constants.dart';
 import 'package:digital_card_app/screens/router.dart';
+import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 
@@ -44,6 +45,32 @@ class _AppSettingsState extends State<AppSettings> {
       title: "Logout",
       leading: const SettingsIcon(icon: Icons.logout, color: Colors.blue),
       subtitle: '',
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: const Text("Log out of Tapea?"),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("Cancel"),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        AppRouter.loginPage,
+                        (_) => false,
+                      );
+                      await FirebaseAuthAPI.logout(context);
+                    },
+                    child: const Text("Log out"),
+                  ),
+                ],
+              );
+            });
+      },
     );
   }
 
@@ -51,7 +78,7 @@ class _AppSettingsState extends State<AppSettings> {
     return SimpleSettingsTile(
       title: "Delete Account",
       subtitle: '',
-      leading: const SettingsIcon(icon: Icons.delete, color: homeColor),
+      leading: const SettingsIcon(icon: Icons.delete, color: logoRedColor),
     );
   }
 }

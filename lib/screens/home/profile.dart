@@ -38,6 +38,11 @@ class _ProfileState extends State<Profile> {
   }
 
   @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return _loading
         ? const Center(

@@ -20,6 +20,7 @@ class _ThemeSettingsScreenState extends State<ThemeSettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: const Text("Set theme"),
       ),
       body: ListView(
@@ -51,6 +52,22 @@ class _ThemeSettingsScreenState extends State<ThemeSettingsScreen> {
 
   void selectBox(int index) {
     final activeTheme = Provider.of<ThemeProvider>(context, listen: false);
+
+    // Fast return to avoid unnecessary rebuilds
+    // if we are not switching the mode.
+
+    // We're on light mode
+    if (_activeBox == 0) {
+      if (index == 0) {
+        return;
+      }
+    }
+    // We're on dark mode
+    if (_activeBox == 1 || _activeBox == 2) {
+      if (index != 0) {
+        return;
+      }
+    }
     setState(() {
       options[_activeBox].value = false;
       options[index].value = true;

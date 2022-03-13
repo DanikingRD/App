@@ -31,6 +31,7 @@ class Tapea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(Provider.of<ThemeProvider>(context).themeMode);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Tapea',

@@ -31,7 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -103,7 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     openCreateProfileScreen();
                   }
                 },
-                backgroundColor: homeColor,
+                backgroundColor: logoRedColor,
               ),
             ),
             const SizedBox(height: 12),
