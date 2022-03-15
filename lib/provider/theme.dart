@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ThemeProvider with ChangeNotifier {
+  static const String lightThemeId = "light";
+  static const String darkThemeId = "dark";
+  static const String systemThemeId = "system";
   ThemeMode _mode = ThemeMode.system;
 
   void toggle(bool isDark) {
@@ -11,6 +14,29 @@ class ThemeProvider with ChangeNotifier {
 
   ThemeMode get themeMode => _mode;
   bool get isDarkMode => ThemeMode.dark == _mode;
+
+  static ThemeMode getThemeById(String name) {
+    switch (name) {
+      case lightThemeId:
+        return ThemeMode.light;
+      case darkThemeId:
+        return ThemeMode.dark;
+      case systemThemeId:
+        return ThemeMode.system;
+    }
+    throw ("$name is not a valid theme id");
+  }
+
+  static String getIdByTheme(ThemeMode mode) {
+    switch (mode) {
+      case ThemeMode.light:
+        return lightThemeId;
+      case ThemeMode.dark:
+        return darkThemeId;
+      case ThemeMode.system:
+        return systemThemeId;
+    }
+  }
 }
 
 final darkTheme = ThemeData(

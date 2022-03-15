@@ -1,11 +1,11 @@
-class UserSettings {
+class UserPreferences {
   final String uid;
   final String theme;
 
-  const UserSettings({required this.uid, required this.theme});
+  const UserPreferences({required this.uid, required this.theme});
 
-  factory UserSettings.fromJson(Map<String, dynamic> json) {
-    return UserSettings(
+  factory UserPreferences.fromJson(Map<String, dynamic> json) {
+    return UserPreferences(
       uid: json["uid"],
       theme: json["theme"],
     );

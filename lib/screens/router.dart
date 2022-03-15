@@ -38,7 +38,7 @@ class AppRouter {
         );
       case homePage:
         return Transition(
-          builder: (_) => const HomeScreen(),
+          builder: (_) => HomeScreen(),
           transitionEffect: TransitionEffect.BOTTOM_TO_TOP,
           settings: settings,
         );

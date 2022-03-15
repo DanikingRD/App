@@ -31,14 +31,14 @@ class Tapea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(Provider.of<ThemeProvider>(context).themeMode);
+    final user = FirebaseAuthAPI.getCurrentUser(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Tapea',
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: Provider.of<ThemeProvider>(context).themeMode,
-      home: const AuthManager(
+      home: AuthManager(
         login: LoginScreen(),
         home: HomeScreen(),
       ),

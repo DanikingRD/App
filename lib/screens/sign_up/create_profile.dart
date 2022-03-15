@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:digital_card_app/constants.dart';
-import 'package:digital_card_app/model/settings.dart';
+import 'package:digital_card_app/model/preferences.dart';
 import 'package:digital_card_app/model/user.dart';
 import 'package:digital_card_app/screens/router.dart';
 import 'package:digital_card_app/util.dart';
@@ -166,11 +166,11 @@ class _CreateProfileState extends State<CreateProfile> {
           path: newUser.uid,
           json: newUser.toJson(),
         );
-        final UserSettings settings = UserSettings(
+        final UserPreferences settings = UserPreferences(
           uid: uid,
           theme: "system",
         );
-        FirestoreCollection("settings").setJson(
+        FirestoreCollection("preferences").setJson(
           path: uid,
           json: settings.toJson(),
         );

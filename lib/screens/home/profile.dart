@@ -57,6 +57,9 @@ class _ProfileState extends State<Profile> {
         alignment: Alignment.topCenter,
         child: Column(
           children: [
+            SizedBox(
+              height: 12,
+            ),
             Stack(
               children: [
                 profileAvatar(),

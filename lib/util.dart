@@ -7,10 +7,6 @@ import 'package:image_picker/image_picker.dart';
 class Util {
   Util._(); // Utility class not meant to be instantiated or extended
 
-  static bool isSystemInDarkMode(BuildContext context) {
-    return MediaQuery.of(context).platformBrightness == Brightness.dark;
-  }
-
 // For picking up images
   static Future<Uint8List?> pickImage(ImageSource source) async {
     final ImagePicker _imagePicker = ImagePicker();
