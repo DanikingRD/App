@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 class HomeButtonNavigation extends StatelessWidget {
   final Function(int)? onTap;
 
-  const HomeButtonNavigation({Key? key, required this.onTap}) : super(key: key);
+  const HomeButtonNavigation({
+    Key? key,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

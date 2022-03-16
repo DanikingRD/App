@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 class FirebaseAuthProvider extends StatelessWidget {
   // Material App
   final Widget? child;
+  final Widget Function(BuildContext, Widget?)? builder;
 
   ///Exposes the FirebaseAuthProvider to the whole widget tree
   ///
@@ -23,12 +24,14 @@ class FirebaseAuthProvider extends StatelessWidget {
   const FirebaseAuthProvider({
     Key? key,
     this.child,
+    this.builder,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => AuthStateChangeNotifier(),
+      builder: builder,
       child: child,
     );
   }

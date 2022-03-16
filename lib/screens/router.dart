@@ -1,5 +1,5 @@
 import 'package:digital_card_app/api/transition.dart';
-import 'package:digital_card_app/screens/home/home.dart';
+import 'package:digital_card_app/screens/home/layout.dart';
 import 'package:digital_card_app/screens/home/settings/theme.dart';
 import 'package:digital_card_app/screens/login.dart';
 import 'package:digital_card_app/screens/sign_up/create_profile.dart';
@@ -38,7 +38,7 @@ class AppRouter {
         );
       case homePage:
         return Transition(
-          builder: (_) => HomeScreen(),
+          builder: (_) => HomeScreenLayout(),
           transitionEffect: TransitionEffect.BOTTOM_TO_TOP,
           settings: settings,
         );

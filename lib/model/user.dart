@@ -10,6 +10,15 @@ class TapeaUser {
     required this.email,
     required this.avatarURL,
   });
+
+  factory TapeaUser.empty() {
+    return const TapeaUser(
+      uid: '',
+      username: '',
+      email: '',
+      avatarURL: null,
+    );
+  }
   factory TapeaUser.fromJson(Map<String, dynamic> json) {
     return TapeaUser(
       uid: json["uid"],

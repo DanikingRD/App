@@ -1,5 +1,8 @@
+import 'package:digital_card_app/model/preferences.dart';
+import 'package:digital_card_app/model/user.dart';
 import 'package:digital_card_app/provider/home.dart';
 import 'package:digital_card_app/provider/theme.dart';
+import 'package:digital_card_app/util.dart';
 import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';
 
@@ -58,18 +61,17 @@ class _ThemeSettingsScreenState extends State<ThemeSettingsScreen> {
     if (_activeBox == index) {
       return;
     }
-    final activeTheme = Provider.of<ThemeProvider>(context, listen: false);
-    final manager = Provider.of<HomeProvider>(context, listen: false);
+    final activeTheme = context.read<ThemeProvider>();
+    final manager = context.read<HomeProvider>();
     setState(() {
       options[_activeBox].value = false;
       options[index].value = true;
       _activeBox = index;
       activeTheme.toggle(_activeBox == 1 || _activeBox == 2);
     });
-    // Update firestore
-    await manager.updateJsonEntry(
-      collection: "preferences",
-      key: manager.preferences["theme"],
+    await manager.updatePreference(
+      id: FirebaseAuthAPI.getCurrentUser(context)!.uid,
+      key: FirestoreJsonKeys.theme,
       value: options[_activeBox].id,
     );
   }

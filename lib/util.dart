@@ -4,6 +4,11 @@ import 'package:digital_card_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+// Firestore keys
+class FirestoreJsonKeys {
+  static const String theme = "theme";
+}
+
 class Util {
   Util._(); // Utility class not meant to be instantiated or extended
 

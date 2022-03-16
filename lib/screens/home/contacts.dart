@@ -1,3 +1,6 @@
+import 'package:digital_card_app/model/preferences.dart';
+import 'package:digital_card_app/model/user.dart';
+import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 
 class Contacts extends StatelessWidget {

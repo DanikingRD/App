@@ -3,16 +3,21 @@ import 'package:flutter/cupertino.dart';
 
 class HomeProvider with ChangeNotifier {
   static const bottomPages = 4;
-  final String uid;
-  HomeProvider(this.uid);
+  HomeProvider();
   int page = 0;
-  late final Map<String, dynamic> preferences;
 
   final FirebaseFirestore _database = FirebaseFirestore.instance;
 
-  Future<void> init() async {
-    final json = await _database.collection("preferences").doc(uid).get();
-    preferences = json.data()!;
+  void loadTheme() {}
+
+  Future<void> updatePreference({
+    required String id,
+    required String key,
+    required dynamic value,
+  }) async {
+    await _database.collection("preferences").doc(id).update({
+      key: value,
+    });
   }
 
   void nextPage(int activePage) {
@@ -20,17 +25,5 @@ class HomeProvider with ChangeNotifier {
       page++;
       notifyListeners();
     }
-  }
-
-  void updatePreferences() {}
-
-  Future<void> updateJsonEntry({
-    required String collection,
-    required String key,
-    dynamic value,
-  }) async {
-    await _database.collection(collection).doc(uid).update({
-      key: value,
-    });
   }
 }
