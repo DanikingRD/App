@@ -1,4 +1,4 @@
-import 'package:digital_card_app/provider/theme.dart';
+import 'package:digital_card_app/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 
 class UserPreferences {
@@ -10,12 +10,6 @@ class UserPreferences {
     required this.theme,
   });
 
-  factory UserPreferences.empty() {
-    return const UserPreferences(
-      uid: '',
-      theme: '',
-    );
-  }
   factory UserPreferences.fromJson(Map<String, dynamic> json) {
     return UserPreferences(
       uid: json["uid"],

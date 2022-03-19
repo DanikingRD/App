@@ -1,5 +1,31 @@
 import 'package:digital_card_app/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class CardTextInput extends StatelessWidget {
+  final TextEditingController controller;
+  final String floatingLabel;
+  const CardTextInput({
+    Key? key,
+    required this.controller,
+    required this.floatingLabel,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      cursorColor: logoRedColor,
+      decoration: InputDecoration(
+        alignLabelWithHint: true,
+        floatingLabelBehavior: controller.text.isEmpty
+            ? FloatingLabelBehavior.auto
+            : FloatingLabelBehavior.always,
+        labelText: floatingLabel,
+      ),
+    );
+  }
+}
 
 class TextFormInput extends StatelessWidget {
   final TextEditingController controller;

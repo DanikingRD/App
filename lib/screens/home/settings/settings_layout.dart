@@ -1,5 +1,5 @@
-import 'package:digital_card_app/constants.dart';
 import 'package:digital_card_app/screens/router.dart';
+import 'package:digital_card_app/util.dart';
 import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
@@ -29,10 +29,14 @@ class _AppSettingsState extends State<AppSettings> {
     );
   }
 
+  Icon getIcon(IconData data) {
+    return Icon(data, color: Util.getIconColorForTheme(context));
+  }
+
   Widget darkMode() {
     return SimpleSettingsTile(
       title: "Theme",
-      leading: const SettingsIcon(icon: Icons.palette, color: Colors.black),
+      leading: getIcon(Icons.palette),
       subtitle: '',
       onTap: () {
         Navigator.pushNamed(context, AppRouter.themeSettingsPage);
@@ -43,7 +47,7 @@ class _AppSettingsState extends State<AppSettings> {
   Widget logout() {
     return SimpleSettingsTile(
       title: "Logout",
-      leading: const SettingsIcon(icon: Icons.logout, color: Colors.blue),
+      leading: getIcon(Icons.logout),
       subtitle: '',
       onTap: () {
         showDialog(
@@ -78,32 +82,7 @@ class _AppSettingsState extends State<AppSettings> {
     return SimpleSettingsTile(
       title: "Delete Account",
       subtitle: '',
-      leading: const SettingsIcon(icon: Icons.delete, color: logoRedColor),
-    );
-  }
-}
-
-class SettingsIcon extends StatelessWidget {
-  final IconData icon;
-  final Color color;
-
-  const SettingsIcon({
-    Key? key,
-    required this.icon,
-    required this.color,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(6),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color,
-      ),
-      child: Icon(
-        icon,
-      ),
+      leading: getIcon(Icons.delete),
     );
   }
 }

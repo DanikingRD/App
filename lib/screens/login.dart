@@ -1,3 +1,4 @@
+import 'package:digital_card_app/api/database.dart';
 import 'package:digital_card_app/constants.dart';
 import 'package:digital_card_app/screens/router.dart';
 import 'package:digital_card_app/util.dart';

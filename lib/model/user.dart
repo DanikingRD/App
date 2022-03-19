@@ -11,14 +11,6 @@ class TapeaUser {
     required this.avatarURL,
   });
 
-  factory TapeaUser.empty() {
-    return const TapeaUser(
-      uid: '',
-      username: '',
-      email: '',
-      avatarURL: null,
-    );
-  }
   factory TapeaUser.fromJson(Map<String, dynamic> json) {
     return TapeaUser(
       uid: json["uid"],
@@ -35,5 +27,10 @@ class TapeaUser {
       "email": email,
       "avatarURL": avatarURL,
     };
+  }
+
+  @override
+  String toString() {
+    return 'TapeaUser(uid: $uid, username: $username, email: $email, avatarURL: $avatarURL)';
   }
 }

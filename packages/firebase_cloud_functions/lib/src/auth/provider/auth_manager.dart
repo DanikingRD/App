@@ -1,8 +1,5 @@
 import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
-import 'package:firebase_cloud_functions/src/auth/provider/auth_provider.dart';
-import 'package:firebase_cloud_functions/src/auth/provider/auth_state_notifier.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
 class AuthManager extends StatelessWidget {
   final Widget login;

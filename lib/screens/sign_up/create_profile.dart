@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:digital_card_app/api/database.dart';
 import 'package:digital_card_app/constants.dart';
 import 'package:digital_card_app/model/preferences.dart';
 import 'package:digital_card_app/model/user.dart';
@@ -133,6 +134,7 @@ class _CreateProfileState extends State<CreateProfile> {
     setState(() {
       _loading = true;
     });
+    final database = FirestoreAPI();
     final String email = widget.account["Email"]!;
     final String password = widget.account["Password"]!;
     await FirebaseAuthAPI.register(
@@ -162,7 +164,8 @@ class _CreateProfileState extends State<CreateProfile> {
           email: email,
           avatarURL: imageURL,
         );
-        FirestoreCollection("users").setJson(
+        database.writeSingle(
+          collection: "users",
           path: newUser.uid,
           json: newUser.toJson(),
         );
@@ -170,8 +173,9 @@ class _CreateProfileState extends State<CreateProfile> {
           uid: uid,
           theme: "system",
         );
-        FirestoreCollection("preferences").setJson(
-          path: uid,
+        database.writeSingle(
+          collection: "preferences",
+          path: newUser.uid,
           json: settings.toJson(),
         );
         Navigator.pushNamedAndRemoveUntil(
