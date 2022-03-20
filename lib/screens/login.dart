@@ -1,4 +1,3 @@
-import 'package:digital_card_app/api/database.dart';
 import 'package:digital_card_app/constants.dart';
 import 'package:digital_card_app/screens/router.dart';
 import 'package:digital_card_app/util.dart';
@@ -59,7 +58,9 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 child: _loading
                     ? const Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
                       )
                     : const Text('Log in'),
                 width: double.infinity,
@@ -71,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Radius.circular(4),
                     ),
                   ),
-                  color: logoRedColor,
+                  color: Colors.red,
                 ),
               ),
             ),

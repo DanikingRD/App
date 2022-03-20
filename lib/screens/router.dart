@@ -9,11 +9,13 @@ import 'package:digital_card_app/screens/home/settings/theme_settings.dart';
 import 'package:digital_card_app/screens/login.dart';
 import 'package:digital_card_app/screens/sign_up/create_profile.dart';
 import 'package:digital_card_app/screens/sign_up/sign_up.dart';
+import 'package:digital_card_app/screens/welcome_screen.dart';
 import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
+  static const String welcomePage = '/welcome';
   static const String loginPage = "/login";
   static const String signUpPage = '/sign_up';
   static const String createProfilePage = '/create_profile';
@@ -22,6 +24,13 @@ class AppRouter {
 
   static Route<dynamic> init(RouteSettings settings) {
     switch (settings.name) {
+      case "/":
+      case welcomePage:
+        return Transition(
+          builder: (_) => const WelcomeScreen(),
+          transitionEffect: TransitionEffect.BOTTOM_TO_TOP,
+          settings: settings,
+        );
       case loginPage:
         return Transition(
           builder: ((_) => const LoginScreen()),

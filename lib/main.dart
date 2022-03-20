@@ -1,10 +1,9 @@
-import 'package:digital_card_app/model/preferences.dart';
 import 'package:digital_card_app/provider/preferences_provider.dart';
 import 'package:digital_card_app/provider/theme_provider.dart';
 import 'package:digital_card_app/provider/user_provider.dart';
 import 'package:digital_card_app/screens/home/home_screen_layout.dart';
-import 'package:digital_card_app/screens/login.dart';
 import 'package:digital_card_app/screens/router.dart';
+import 'package:digital_card_app/screens/welcome_screen.dart';
 import 'package:digital_card_app/util.dart';
 import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +54,7 @@ class Tapea extends StatelessWidget {
           ? Provider.of<ThemeProvider>(context).themeMode
           : ThemeMode.system,
       home: const AuthManager(
-        login: LoginScreen(),
+        root: WelcomeScreen(),
         home: HomeScreenLayout(),
       ),
       onGenerateRoute: AppRouter.init,

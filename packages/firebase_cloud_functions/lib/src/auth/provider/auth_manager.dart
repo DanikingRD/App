@@ -2,7 +2,7 @@ import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 
 class AuthManager extends StatelessWidget {
-  final Widget login;
+  final Widget root;
   final Widget home;
 
   ///An Authentication Gateway for your application
@@ -16,7 +16,7 @@ class AuthManager extends StatelessWidget {
   ///[destinationFragment] (required) - The Destination View
   const AuthManager({
     Key? key,
-    required this.login,
+    required this.root,
     required this.home,
   }) : super(key: key);
 
@@ -29,7 +29,7 @@ class AuthManager extends StatelessWidget {
         if (snapshot.hasData) {
           return home;
         } else {
-          return login;
+          return root;
         }
       }),
     );
