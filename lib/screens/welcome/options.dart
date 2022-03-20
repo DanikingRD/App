@@ -34,14 +34,14 @@ class OptionsPage extends StatelessWidget {
           TextButton(
             style: ButtonStyle(
               padding: MaterialStateProperty.all<EdgeInsets>(
-                const EdgeInsets.symmetric(horizontal: 50, vertical: 25),
+                const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
               ),
               backgroundColor: MaterialStateProperty.all<Color>(
                 getColor(isDarkMode),
               ),
               shape: MaterialStateProperty.all<OutlinedBorder>(
                 RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
             ),

@@ -26,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Column(
@@ -39,7 +40,10 @@ class _LoginScreenState extends State<LoginScreen> {
               'assets/image/tapea.png',
               height: 64,
             ),
-            const SizedBox(height: 64),
+            Flexible(
+              child: Container(),
+              flex: 1,
+            ),
             TextFormInput(
               hintText: 'Enter your email',
               controller: _email,
@@ -76,10 +80,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(
+              height: 20,
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: GestureDetector(
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  AppRouter.recoveryPage,
+                ),
+                child: const Text("Forgot Password?"),
+              ),
+            ),
             Flexible(
               child: Container(),
-              flex: 1,
+              flex: 3,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

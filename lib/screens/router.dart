@@ -1,10 +1,11 @@
 import 'package:digital_card_app/api/transition.dart';
 import 'package:digital_card_app/provider/theme_provider.dart';
+import 'package:digital_card_app/screens/auth/recovery.dart';
+import 'package:digital_card_app/screens/auth/sign_up/create_profile.dart';
+import 'package:digital_card_app/screens/auth/sign_up/sign_up.dart';
 import 'package:digital_card_app/screens/home/home_screen_layout.dart';
 import 'package:digital_card_app/screens/home/settings/theme_settings.dart';
-import 'package:digital_card_app/screens/login.dart';
-import 'package:digital_card_app/screens/sign_up/create_profile.dart';
-import 'package:digital_card_app/screens/sign_up/sign_up.dart';
+import 'package:digital_card_app/screens/auth/login.dart';
 import 'package:digital_card_app/screens/welcome/welcome_screen_layout.dart';
 import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +18,7 @@ class AppRouter {
   static const String createProfilePage = '/create_profile';
   static const String homePage = '/homepage';
   static const String themeSettingsPage = '/theme_settings';
+  static const String recoveryPage = '/recovery';
 
   static Route<dynamic> init(RouteSettings settings) {
     switch (settings.name) {
@@ -32,6 +34,11 @@ class AppRouter {
           builder: ((_) => const LoginScreen()),
           transitionEffect: TransitionEffect.BOTTOM_TO_TOP,
           settings: settings,
+        );
+      case recoveryPage:
+        return Transition(
+          builder: (_) => const RecoveryScreen(),
+          transitionEffect: TransitionEffect.RIGHT_TO_LEFT,
         );
       case signUpPage:
         return Transition(
