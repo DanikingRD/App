@@ -11,3 +11,4 @@ const appGradient = LinearGradient(
   end: Alignment.bottomRight,
 );
 const appSplashRadius = Material.defaultSplashRadius * 0.55;
+const double appBarElevation = 0.25;

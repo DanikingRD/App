@@ -1,15 +1,11 @@
-import 'package:digital_card_app/api/database.dart';
 import 'package:digital_card_app/api/transition.dart';
-import 'package:digital_card_app/main.dart';
-import 'package:digital_card_app/model/preferences.dart';
-import 'package:digital_card_app/model/user.dart';
 import 'package:digital_card_app/provider/theme_provider.dart';
 import 'package:digital_card_app/screens/home/home_screen_layout.dart';
 import 'package:digital_card_app/screens/home/settings/theme_settings.dart';
 import 'package:digital_card_app/screens/login.dart';
 import 'package:digital_card_app/screens/sign_up/create_profile.dart';
 import 'package:digital_card_app/screens/sign_up/sign_up.dart';
-import 'package:digital_card_app/screens/welcome_screen.dart';
+import 'package:digital_card_app/screens/welcome/welcome_screen_layout.dart';
 import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +23,7 @@ class AppRouter {
       case "/":
       case welcomePage:
         return Transition(
-          builder: (_) => const WelcomeScreen(),
+          builder: (_) => const WelcomeScreenLayout(),
           transitionEffect: TransitionEffect.BOTTOM_TO_TOP,
           settings: settings,
         );

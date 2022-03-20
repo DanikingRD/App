@@ -14,6 +14,7 @@ class FirestoreJsonKeys {
 
 class TapeaThemes {
   static final darkTheme = ThemeData(
+    primaryColor: logoRedColor,
     brightness: Brightness.dark,
     scaffoldBackgroundColor: Colors.black,
     canvasColor: Colors.black,
@@ -22,16 +23,18 @@ class TapeaThemes {
         statusBarColor: Colors.black,
         statusBarIconBrightness: Brightness.light,
       ),
-      elevation: 0.25,
+      elevation: 0.0,
       shadowColor: Colors.white,
       backgroundColor: Colors.black,
       foregroundColor: Colors.white,
     ),
-    inputDecorationTheme:
-        const InputDecorationTheme(fillColor: Color.fromARGB(255, 19, 19, 19)),
-    colorScheme: const ColorScheme.dark().copyWith(primary: logoRedColor),
+    inputDecorationTheme: const InputDecorationTheme(
+      fillColor: Color.fromARGB(255, 19, 19, 19),
+    ),
+    colorScheme: const ColorScheme.dark().copyWith(primary: Colors.grey),
   );
   static final lightTheme = ThemeData(
+    primaryColor: logoRedColor,
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
     canvasColor: Colors.white,
@@ -40,13 +43,13 @@ class TapeaThemes {
         statusBarColor: Colors.white,
         statusBarIconBrightness: Brightness.dark,
       ),
-      elevation: 0.25,
+      elevation: 0,
       shadowColor: Colors.black,
       backgroundColor: Colors.white,
       foregroundColor: Colors.black,
     ),
     inputDecorationTheme: InputDecorationTheme(fillColor: Colors.grey[300]),
-    colorScheme: const ColorScheme.light().copyWith(primary: logoRedColor),
+    colorScheme: const ColorScheme.light().copyWith(primary: Colors.grey),
   );
 }
 
