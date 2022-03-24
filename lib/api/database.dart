@@ -33,6 +33,29 @@ class FirestoreAPI {
     return json.data()!;
   }
 
+  Future<List<Map<String, dynamic>>> readCards({required String id}) async {
+    final query =
+        await _instance.collection("cards").doc(id).collection("devices").get();
+    final List<Map<String, dynamic>> docs = [];
+    for (var doc in query.docs) {
+      docs.add(doc.data());
+    }
+    return docs;
+  }
+
+  Future<void> writeCard({
+    required String id,
+    required String cardTitle,
+    required Map<String, dynamic> json,
+  }) async {
+    _instance
+        .collection("cards")
+        .doc(id)
+        .collection("devices")
+        .doc(cardTitle)
+        .set(json);
+  }
+
   Future<TapeaUser> readUser(String id) async {
     final json = await readSingle(collection: "users", uid: id);
     return TapeaUser.fromJson(json);

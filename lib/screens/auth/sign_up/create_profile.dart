@@ -68,7 +68,7 @@ class _CreateProfileState extends State<CreateProfile> {
                       left: 80,
                       child: IconButton(
                         onPressed: pickImage,
-                        icon: const Icon(Icons.add_a_photo),
+                        icon: const Icon(Icons.edit),
                       ),
                     )
                   ],
@@ -163,6 +163,7 @@ class _CreateProfileState extends State<CreateProfile> {
           username: widget.account["Username"]!,
           email: email,
           avatarURL: imageURL,
+          devices: 0,
         );
         database.writeSingle(
           collection: "users",
@@ -191,7 +192,7 @@ class _CreateProfileState extends State<CreateProfile> {
   }
 
   void pickImage() async {
-    final Uint8List? data = await Util.pickImage(ImageSource.camera);
+    final Uint8List? data = await Util.pickImage(ImageSource.gallery);
     if (data != null) {
       setState(() => _selectedImage = data);
     }

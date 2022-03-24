@@ -97,12 +97,14 @@ class _ThemeSettingsScreenState extends State<ThemeSettingsScreen> {
   }
 
   void updateInternalState(ThemeProvider provider, int newActiveIndex) {
-    setState(() {
-      options[_activeBox].value = false;
-      options[newActiveIndex].value = true;
-      _activeBox = newActiveIndex;
-      provider.toggle(_activeBox == 1 || _activeBox == 2);
-    });
+    setState(
+      () {
+        options[_activeBox].value = false;
+        options[newActiveIndex].value = true;
+        _activeBox = newActiveIndex;
+        provider.toggle(_activeBox == 1 || _activeBox == 2);
+      },
+    );
   }
 }
 

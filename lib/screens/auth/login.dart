@@ -66,7 +66,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.white,
                         ),
                       )
-                    : const Text('Log in'),
+                    : const Text(
+                        'Log in',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                 width: double.infinity,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(vertical: 12),

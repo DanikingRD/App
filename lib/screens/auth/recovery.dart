@@ -1,3 +1,4 @@
+import 'package:digital_card_app/constants.dart';
 import 'package:digital_card_app/provider/theme_provider.dart';
 import 'package:digital_card_app/widgets/text_input.dart';
 import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
@@ -21,7 +22,6 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode(context);
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -58,9 +58,7 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
                 child: TextButton(
                   onPressed: () {},
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      isDarkMode ? Colors.white : Colors.black,
-                    ),
+                    backgroundColor: MaterialStateProperty.all(logoRedColor),
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
@@ -72,9 +70,10 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
                   ),
                   child: Text(
                     "Send link",
-                    style: Theme.of(context).textTheme.button!.copyWith(
-                          color: isDarkMode ? Colors.black : Colors.white,
-                        ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .button!
+                        .copyWith(color: Colors.white),
                   ),
                 ),
               ),

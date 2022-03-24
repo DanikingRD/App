@@ -1,11 +1,13 @@
+import 'package:digital_card_app/model/card.dart';
 import 'package:digital_card_app/model/preferences.dart';
 import 'package:digital_card_app/provider/preferences_provider.dart';
 import 'package:digital_card_app/provider/theme_provider.dart';
 import 'package:digital_card_app/provider/user_provider.dart';
-import 'package:digital_card_app/screens/create_card.dart';
 import 'package:digital_card_app/screens/home/contacts.dart';
+import 'package:digital_card_app/screens/home/create_card.dart';
 import 'package:digital_card_app/screens/home/settings/settings_layout.dart';
-import 'package:digital_card_app/screens/tapea_card.dart';
+import 'package:digital_card_app/screens/router.dart';
+import 'package:digital_card_app/screens/home/tapea_card.dart';
 import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +20,7 @@ class HomeScreenLayout extends StatefulWidget {
 
 class _HomeScreenLayoutState extends State<HomeScreenLayout> {
   final PageController _pageController = PageController();
+  late TapeaCard? card;
   bool loading = false;
 
   int _page = 0;
@@ -71,19 +74,12 @@ class _HomeScreenLayoutState extends State<HomeScreenLayout> {
 
   Widget buildHome(BuildContext context) {
     final theme = Theme.of(context);
-    final user = Provider.of<UserProvider>(context).getUser;
-    final prefs = Provider.of<PreferencesProvider>(context).getPreferences;
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const CreateCardScreen(),
-                ),
-              );
+              Navigator.pushNamed(context, AppRouter.createCardPage);
             },
             icon: const Icon(Icons.add_box_outlined),
           ),
@@ -102,7 +98,7 @@ class _HomeScreenLayoutState extends State<HomeScreenLayout> {
         controller: _pageController,
         children: const [
           Contacts(),
-          TapeaCard(),
+          TapeaCardScreen(),
           AppSettings(),
         ],
       ),
