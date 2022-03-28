@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:digital_card_app/api/database.dart';
 import 'package:digital_card_app/constants.dart';
 import 'package:digital_card_app/model/card.dart';
-import 'package:digital_card_app/model/user.dart';
 import 'package:digital_card_app/screens/router.dart';
 import 'package:digital_card_app/util.dart';
 import 'package:digital_card_app/widgets/text_input.dart';
@@ -60,6 +59,7 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
 
   @override
   Widget build(BuildContext context) {
+  
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -188,7 +188,7 @@ class TextInputManager {
   final String title;
   final TextEditingController controller;
 
-  TextInputManager(this.title) : controller = TextEditingController();
+   TextInputManager(this.title) : controller = TextEditingController();
 
   void dispose() {
     controller.dispose();

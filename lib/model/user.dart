@@ -3,14 +3,14 @@ class TapeaUser {
   final String username;
   final String email;
   final String? avatarURL;
-  final int devices;
+  final int profiles;
 
   const TapeaUser({
     required this.uid,
     required this.username,
     required this.email,
     required this.avatarURL,
-    required this.devices,
+    required this.profiles,
   });
 
   factory TapeaUser.fromJson(Map<String, dynamic> json) {
@@ -19,7 +19,7 @@ class TapeaUser {
       username: json["username"],
       email: json["email"],
       avatarURL: json["avatarURL"],
-      devices: json["devices"],
+      profiles: json["profiles"],
     );
   }
 
@@ -29,12 +29,12 @@ class TapeaUser {
       "username": username,
       "email": email,
       "avatarURL": avatarURL,
-      "devices": devices,
+      "profiles": profiles,
     };
   }
 
   @override
   String toString() {
-    return 'TapeaUser(uid: $uid, username: $username, email: $email, avatarURL: $avatarURL, devices: $devices)';
+    return 'TapeaUser(uid: $uid, username: $username, email: $email, avatarURL: $avatarURL, devices: $profiles)';
   }
 }

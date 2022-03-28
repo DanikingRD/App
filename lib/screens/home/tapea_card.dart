@@ -24,7 +24,7 @@ class _TapeaCardScreenState extends State<TapeaCardScreen> {
       context,
       listen: false,
     ).getUser;
-    if (user.devices > 0) {
+    if (user.profiles > 0) {
       loadCard();
     }
   }

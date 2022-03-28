@@ -163,7 +163,7 @@ class _CreateProfileState extends State<CreateProfile> {
           username: widget.account["Username"]!,
           email: email,
           avatarURL: imageURL,
-          devices: 0,
+          profiles: 0,
         );
         database.writeSingle(
           collection: "users",

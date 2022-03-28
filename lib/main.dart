@@ -39,7 +39,7 @@ class AppInitializer extends StatelessWidget {
   }
 }
 
-class Tapea extends StatelessWidget {
+class Tapea extends StatelessWidget { 
   final bool loggedIn;
   const Tapea({Key? key, required this.loggedIn}) : super(key: key);
 
