@@ -1,5 +1,3 @@
-import 'package:digital_card_app/provider/theme_provider.dart';
-import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -16,7 +14,7 @@ class IntroductionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode(context);
+    final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       body: Column(
         children: [

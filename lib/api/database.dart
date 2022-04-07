@@ -1,21 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:digital_card_app/model/preferences.dart';
+import 'package:digital_card_app/model/card.dart';
 import 'package:digital_card_app/model/user.dart';
 
 class FirestoreAPI {
-  final CollectionReference preferences =
-      FirebaseFirestore.instance.collection("preferences");
+
   final CollectionReference users =
       FirebaseFirestore.instance.collection("users");
   final FirebaseFirestore _instance = FirebaseFirestore.instance;
 
-  Stream<UserPreferences> streamPreferences(String id) {
-    return _instance
-        .collection("preferences")
-        .doc(id)
-        .snapshots()
-        .map((event) => UserPreferences.fromJson(event.data()!));
-  }
 
   Stream<TapeaUser> streamUser(String id) {
     return _instance
@@ -32,16 +24,22 @@ class FirestoreAPI {
     final json = await _instance.collection(collection).doc(uid).get();
     return json.data()!;
   }
+  //   try {
+  //     return json.data()!;
+  //   } on Exception catch (e) {
 
-  Future<List<Map<String, dynamic>>> readCards({required String id}) async {
-    final query =
-        await _instance.collection("cards").doc(id).collection("devices").get();
-    final List<Map<String, dynamic>> docs = [];
-    for (var doc in query.docs) {
-      docs.add(doc.data());
-    }
-    return docs;
-  }
+  //   }; 
+  // }
+
+  // Future<List<Map<String, dynamic>>> readCards({required String id}) async {
+  //   final query =
+  //       await _instance.collection("profiles").doc(id).collection("devices").get();
+  //   final List<Map<String, dynamic>> docs = [];
+  //   for (var doc in query.docs) {
+  //     docs.add(doc.data());
+  //   }
+  //   return docs;
+  // }
 
   Future<void> writeCard({
     required String id,
@@ -49,21 +47,29 @@ class FirestoreAPI {
     required Map<String, dynamic> json,
   }) async {
     _instance
-        .collection("cards")
+        .collection("profiles")
         .doc(id)
         .collection("devices")
         .doc(cardTitle)
         .set(json);
   }
 
+  Future<TapeaCard> readCard({
+    required String uid,
+    required String cardTitle,
+  }) async {
+    final json = await _instance
+    .collection("profiles")
+    .doc(uid)
+    .collection("devices")
+    .doc(cardTitle)
+    .get();
+    return TapeaCard.fromJson(json.data()!);
+  }
+
   Future<TapeaUser> readUser(String id) async {
     final json = await readSingle(collection: "users", uid: id);
     return TapeaUser.fromJson(json);
-  }
-
-  Future<UserPreferences> readPreferences(String id) async {
-    final json = await readSingle(collection: "preferences", uid: id);
-    return UserPreferences.fromJson(json);
   }
 
   Future<void> writeSingle({

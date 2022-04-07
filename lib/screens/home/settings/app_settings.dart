@@ -20,7 +20,6 @@ class _AppSettingsState extends State<AppSettings> {
         SettingsGroup(
           title: "GENERAL",
           children: [
-            darkMode(),
             logout(),
             delete(),
           ],
@@ -30,18 +29,7 @@ class _AppSettingsState extends State<AppSettings> {
   }
 
   Icon getIcon(IconData data) {
-    return Icon(data, color: Util.getIconColorForTheme(context));
-  }
-
-  Widget darkMode() {
-    return SimpleSettingsTile(
-      title: "Theme",
-      leading: getIcon(Icons.palette),
-      subtitle: '',
-      onTap: () {
-        Navigator.pushNamed(context, AppRouter.themeSettingsPage);
-      },
-    );
+    return Icon(data, color: Colors.black);
   }
 
   Widget logout() {

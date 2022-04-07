@@ -1,18 +1,16 @@
 import 'package:digital_card_app/api/transition.dart';
-import 'package:digital_card_app/model/card.dart';
-import 'package:digital_card_app/provider/theme_provider.dart';
 import 'package:digital_card_app/screens/auth/recovery.dart';
-import 'package:digital_card_app/screens/auth/sign_up/create_profile.dart';
+import 'package:digital_card_app/screens/auth/sign_up/create__default_profile.dart';
 import 'package:digital_card_app/screens/auth/sign_up/sign_up.dart';
 import 'package:digital_card_app/screens/home/create_card.dart';
-import 'package:digital_card_app/screens/home/home_screen_layout.dart';
-import 'package:digital_card_app/screens/home/settings/theme_settings.dart';
+import 'package:digital_card_app/screens/home/home_screen_loader.dart';
 import 'package:digital_card_app/screens/auth/login.dart';
+import 'package:digital_card_app/screens/home/share_card_screen.dart';
 import 'package:digital_card_app/screens/home/tapea_card.dart';
 import 'package:digital_card_app/screens/welcome/welcome_screen_layout.dart';
-import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class AppRouter {
   static const String welcomePage = '/welcome';
@@ -24,6 +22,8 @@ class AppRouter {
   static const String recoveryPage = '/recovery';
   static const String createCardPage = '/create_card';
   static const String cardPage = '/card';
+  static const String shareCardPage = '/share';
+
   static Route<dynamic> init(RouteSettings settings) {
     switch (settings.name) {
       case "/":
@@ -52,7 +52,7 @@ class AppRouter {
         );
       case createProfilePage:
         return Transition(
-          builder: (_) => CreateProfile(
+          builder: (_) => CreateDefaultProfile(
             account: settings.arguments as Map<String, String>,
           ),
           transitionEffect: TransitionEffect.RIGHT_TO_LEFT,
@@ -60,16 +60,8 @@ class AppRouter {
         );
       case homePage:
         return Transition(
-          builder: (_) => const HomeScreenLayout(),
+          builder: (_) => const HomeScreenLoader(),
           transitionEffect: TransitionEffect.BOTTOM_TO_TOP,
-          settings: settings,
-        );
-      case themeSettingsPage:
-        return Transition(
-          builder: (ctx) => ThemeSettingsScreen(
-            localTheme: Provider.of<ThemeProvider>(ctx).themeMode,
-          ),
-          transitionEffect: TransitionEffect.RIGHT_TO_LEFT,
           settings: settings,
         );
       case createCardPage:
@@ -80,9 +72,17 @@ class AppRouter {
         );
       case cardPage:
         return Transition(
-            builder: (_) => TapeaCardScreen(),
-            transitionEffect: TransitionEffect.BOTTOM_TO_TOP,
-            settings: settings);
+          builder: (_) => const TapeaCardScreen(),
+          transitionEffect: TransitionEffect.BOTTOM_TO_TOP,
+          settings: settings,
+        );
+      case shareCardPage:
+        final QrImage qrCode = settings.arguments! as QrImage;
+        return Transition(
+          builder: (_) => ShareCardScreen(card: qrCode),
+          transitionEffect: TransitionEffect.BOTTOM_TO_TOP,
+          settings: settings,
+        );
       default:
         throw ('The screen is not registered');
     }

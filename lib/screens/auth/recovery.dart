@@ -1,5 +1,4 @@
 import 'package:digital_card_app/constants.dart';
-import 'package:digital_card_app/provider/theme_provider.dart';
 import 'package:digital_card_app/widgets/text_input.dart';
 import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';

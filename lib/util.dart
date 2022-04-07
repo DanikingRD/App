@@ -1,8 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:digital_card_app/constants.dart';
-import 'package:digital_card_app/provider/theme_provider.dart';
-import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -55,14 +53,6 @@ class TapeaThemes {
 
 class Util {
   Util._(); // Utility class not meant to be instantiated or extended
-
-  static Color getIconColorForTheme(BuildContext context) {
-    final ThemeProvider provider = Provider.of<ThemeProvider>(context);
-    if (provider.isDarkMode(context)) {
-      return Colors.white;
-    }
-    return Colors.black;
-  }
 
 // For picking up images
   static Future<Uint8List?> pickImage(ImageSource source) async {

@@ -1,6 +1,4 @@
-import 'package:digital_card_app/provider/theme_provider.dart';
 import 'package:digital_card_app/screens/router.dart';
-import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';
 
 class OptionsPage extends StatelessWidget {
@@ -9,7 +7,7 @@ class OptionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode(context);
+    final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 45),
       child: Column(

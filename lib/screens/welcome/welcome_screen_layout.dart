@@ -1,4 +1,3 @@
-import 'package:digital_card_app/provider/theme_provider.dart';
 import 'package:digital_card_app/screens/welcome/introduction.dart';
 import 'package:digital_card_app/screens/welcome/options.dart';
 import 'package:digital_card_app/screens/welcome/share.dart';
@@ -28,7 +27,7 @@ class _WelcomeScreenLayoutState extends State<WelcomeScreenLayout> {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode(context);
+    final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
     const Duration duration = Duration(milliseconds: 250);
     return Scaffold(
       appBar: AppBar(),

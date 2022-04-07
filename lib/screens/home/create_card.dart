@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:digital_card_app/api/database.dart';
 import 'package:digital_card_app/constants.dart';
 import 'package:digital_card_app/model/card.dart';
-import 'package:digital_card_app/screens/router.dart';
+import 'package:digital_card_app/provider/card_provider.dart';
 import 'package:digital_card_app/util.dart';
 import 'package:digital_card_app/widgets/text_input.dart';
 import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
@@ -30,9 +30,12 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
   Color color = logoRedColor;
 
   Future<void> onFinish() async {
+    print("onFinish()");
     final String uid = FirebaseAuthAPI.getCurrentUser(context)!.uid;
     final TapeaCard card = TapeaCard(
-      name: managers[0].controller.text,
+      title: managers[0].controller.text,
+      firstName: managers[1].controller.text,
+      lastName: managers[2].controller.text,
       jobTitle: managers[3].controller.text,
       company: managers[4].controller.text,
       color: color.value,
@@ -40,9 +43,11 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
     );
     await FirestoreAPI().writeCard(
       id: uid,
-      cardTitle: card.name,
+      cardTitle: card.title,
       json: card.toJson(),
     );
+    Provider.of<CardProvider>(context, listen: false).update("Luis Daniel", context);
+    
   }
 
   bool isValid() {
@@ -59,7 +64,6 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
 
   @override
   Widget build(BuildContext context) {
-  
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -68,10 +72,7 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
               if (isValid()) {
                 await onFinish();
               }
-              Navigator.popAndPushNamed(
-                context,
-                AppRouter.cardPage,
-              );
+              Navigator.pop(context);
             },
             icon: const Icon(
               Icons.done,
@@ -113,11 +114,11 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
             flex: 1,
           ),
           TextButton(
-            onPressed: () {},
-            child: Text(
+            onPressed: () => pickColor(),
+            child: const Text(
               "Select card color",
               style: TextStyle(
-                color: Util.getIconColorForTheme(context),
+                color: Colors.black,
               ),
             ),
           ),
