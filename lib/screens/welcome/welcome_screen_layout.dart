@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:digital_card_app/screens/welcome/introduction.dart';
 import 'package:digital_card_app/screens/welcome/options.dart';
 import 'package:digital_card_app/screens/welcome/share.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -14,7 +17,11 @@ class WelcomeScreenLayout extends StatefulWidget {
 
 class _WelcomeScreenLayoutState extends State<WelcomeScreenLayout> {
   final PageController _controller = PageController();
-
+  final _log = Logger((WelcomeScreenLayout).toString());
+  @override
+  void initState() {
+    super.initState();
+  }
   @override
   void dispose() {
     _controller.dispose();
@@ -28,6 +35,7 @@ class _WelcomeScreenLayoutState extends State<WelcomeScreenLayout> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    _log.fine("test");
     const Duration duration = Duration(milliseconds: 250);
     return Scaffold(
       appBar: AppBar(),

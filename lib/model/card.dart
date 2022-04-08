@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class TapeaCard {
   final String title;
@@ -6,7 +5,6 @@ class TapeaCard {
   final String lastName;
   final String jobTitle;
   final String company;
-  final int color;
   final String? photo;
 
   TapeaCard({
@@ -15,7 +13,6 @@ class TapeaCard {
     required this.lastName,
     required this.jobTitle,
     required this.company,
-    required this.color,
     this.photo,
   });
 
@@ -26,7 +23,6 @@ class TapeaCard {
       lastName: json["lastName"],
       jobTitle: json["header"],
       company: json["subtitle"],
-      color: json["color"],
       photo: json["photo"],
     );
   }
@@ -38,15 +34,13 @@ class TapeaCard {
       "lastName": lastName,
       "header": jobTitle,
       "subtitle": company,
-      "color": color,
       "photo": photo,
     };
   }
 
-  Color get getColor => Color(color).withOpacity(1);
 
   @override
   String toString() {
-    return 'TapeaCard(title: $title, firstName: $firstName, lastName: $lastName, jobTitle: $jobTitle, company: $company, color: $color, photo: $photo)';
+    return 'TapeaCard(title: $title, firstName: $firstName, lastName: $lastName, jobTitle: $jobTitle, company: $company photo: $photo)';
   }
 }

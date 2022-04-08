@@ -1,19 +1,22 @@
 import 'package:digital_card_app/provider/card_provider.dart';
+import 'package:digital_card_app/provider/theme_provider.dart';
 import 'package:digital_card_app/provider/user_provider.dart';
-import 'package:digital_card_app/screens/home/home_screen_loader.dart';
+import 'package:digital_card_app/screens/home/home_layout.dart';
 import 'package:digital_card_app/screens/router.dart';
 import 'package:digital_card_app/screens/welcome/welcome_screen_layout.dart';
 import 'package:digital_card_app/util.dart';
 import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:logging/logging.dart';
 
-Future<void> main(List<String> args) async {  
+Future<void> main(List<String> args) async {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((LogRecord record) {
-      print('[${record.time.toString().substring(11, 19)}] [${record.loggerName}/${record.level.name}]: ${record.message}');
+    print('[${record.time.toString().substring(11, 19)}] [${record.loggerName}/${record.level.name}]: ${record.message}');
   });
   WidgetsFlutterBinding.ensureInitialized();
+  
   await Firebase.initializeApp();
   runApp(const AppInitializer());
 }
@@ -26,10 +29,13 @@ class AppInitializer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FirebaseAuthProvider(
-      builder: (ctx, widget) { 
+      builder: (ctx, widget) {
         _log.fine("Loading Tapea 1.0.0");
         return MultiProvider(
           providers: [
+            ChangeNotifierProvider(
+              create: (_) => ThemeProvider(),
+            ),
             ChangeNotifierProvider(
               create: (_) => UserProvider(),
             ),
@@ -51,11 +57,12 @@ class Tapea extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Tapea',
+      darkTheme: TapeaThemes.darkTheme,
       theme: TapeaThemes.lightTheme,
-      themeMode: loggedIn ? ThemeMode.system : ThemeMode.light,
+      themeMode: loggedIn ? ThemeMode.light : ThemeMode.system,
       home: const AuthManager(
         root: WelcomeScreenLayout(),
-        home: HomeScreenLoader(),
+        home: HomeLayout(),
       ),
       onGenerateRoute: AppRouter.init,
     );

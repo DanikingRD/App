@@ -47,7 +47,30 @@ class _TapeaCardScreenState extends State<TapeaCardScreen> {
     final String email = user.email;
     final card = Provider.of<CardProvider>(context).getCard;
     final qr = QrImage(data: card.firstName);
+
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          // Edit card
+          IconButton(
+            onPressed: () => Navigator.pushNamed(context, AppRouter.cardEditorPage, arguments: false),
+            icon: const Icon(Icons.edit_outlined),
+          ),
+          // Create card
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, AppRouter.cardEditorPage, arguments:  true);
+            },
+            icon: const Icon(Icons.add_box_outlined),
+          ),
+        ],
+        title: SafeArea(
+          child: Image.asset(
+            "assets/image/tapea.png",
+            height: 48,
+          ),
+        ),
+      ),
       body: Column(
         children: [
           const SizedBox(height: 25),

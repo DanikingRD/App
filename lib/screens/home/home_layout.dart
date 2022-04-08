@@ -3,18 +3,18 @@ import 'package:digital_card_app/provider/user_provider.dart';
 import 'package:digital_card_app/screens/home/contacts.dart';
 import 'package:digital_card_app/screens/home/settings/app_settings.dart';
 import 'package:digital_card_app/screens/router.dart';
-import 'package:digital_card_app/screens/home/tapea_card.dart';
+import 'package:digital_card_app/screens/home/card.dart';
 import 'package:firebase_cloud_functions/firebase_cloud_functions.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreenLoader extends StatefulWidget {
-  const HomeScreenLoader({Key? key}) : super(key: key);
+class HomeLayout extends StatefulWidget {
+  const HomeLayout({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreenLoader> createState() => _HomeScreenLoaderState();
+  State<HomeLayout> createState() => _HomeLayoutState();
 }
 
-class _HomeScreenLoaderState extends State<HomeScreenLoader> {
+class _HomeLayoutState extends State<HomeLayout> {
   final PageController _pageController = PageController();
   bool loading = false;
 
@@ -66,27 +66,9 @@ class _HomeScreenLoaderState extends State<HomeScreenLoader> {
   }
 
   Widget buildHome(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, AppRouter.createCardPage);
-            },
-            icon: const Icon(Icons.add_box_outlined),
-          ),
-        ],
-        backgroundColor: Colors.white,
-        title: SafeArea(
-          child: Image.asset(
-            "assets/image/tapea.png",
-            height: 48,
-          ),
-        ),
-      ),
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         onPageChanged: onPageChanged,
         controller: _pageController,
         children: const [

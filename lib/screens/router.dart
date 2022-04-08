@@ -2,11 +2,11 @@ import 'package:digital_card_app/api/transition.dart';
 import 'package:digital_card_app/screens/auth/recovery.dart';
 import 'package:digital_card_app/screens/auth/sign_up/create__default_profile.dart';
 import 'package:digital_card_app/screens/auth/sign_up/sign_up.dart';
-import 'package:digital_card_app/screens/home/create_card.dart';
-import 'package:digital_card_app/screens/home/home_screen_loader.dart';
+import 'package:digital_card_app/screens/home/card/card_editor.dart';
+import 'package:digital_card_app/screens/home/home_layout.dart';
 import 'package:digital_card_app/screens/auth/login.dart';
 import 'package:digital_card_app/screens/home/share_card_screen.dart';
-import 'package:digital_card_app/screens/home/tapea_card.dart';
+import 'package:digital_card_app/screens/home/card.dart';
 import 'package:digital_card_app/screens/welcome/welcome_screen_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class AppRouter {
   static const String homePage = '/homepage';
   static const String themeSettingsPage = '/theme_settings';
   static const String recoveryPage = '/recovery';
-  static const String createCardPage = '/create_card';
+  static const String cardEditorPage = '/card_editor';
   static const String cardPage = '/card';
   static const String shareCardPage = '/share';
 
@@ -60,13 +60,14 @@ class AppRouter {
         );
       case homePage:
         return Transition(
-          builder: (_) => const HomeScreenLoader(),
+          builder: (_) => const HomeLayout(),
           transitionEffect: TransitionEffect.BOTTOM_TO_TOP,
           settings: settings,
         );
-      case createCardPage:
+      case cardEditorPage:
+      final bool createCard = settings.arguments as bool;
         return Transition(
-          builder: (_) => const CreateCardScreen(),
+          builder: (_) => CardEditor(createNewCard: createCard),
           transitionEffect: TransitionEffect.BOTTOM_TO_TOP,
           settings: settings,
         );

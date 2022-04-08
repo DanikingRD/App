@@ -26,7 +26,6 @@ class _CreateDefaultProfileState extends State<CreateDefaultProfile> {
   final TextEditingController _lastName = TextEditingController();
   final TextEditingController _jobTitle = TextEditingController();
   final TextEditingController _company = TextEditingController();
-  final Color color = logoRedColor;
   final GlobalKey<FormState> form = GlobalKey();
   static final Logger log = Logger("$CreateDefaultProfile");
 
@@ -234,7 +233,6 @@ class _CreateDefaultProfileState extends State<CreateDefaultProfile> {
       lastName: _lastName.text,
       jobTitle: _jobTitle.text,
       company: _company.text,
-      color: color.value,
     );
     await api.writeCard(
       id: id,
